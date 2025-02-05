@@ -1,1 +1,1 @@
-# siteweb
+creer moi un dossier backend et un dossier frontend pour faire un site web, avec une page d'accueil ou l'ont peux se connecter, et une fois que l'ont s'est connecté on accede à une autre page que tu va creer qui va dire bienvenue, les identifiant et mot de passe sont sur une base de donnée qui s'appelle data‧db qui est dans le dossier principal, tu dois relier tout ça, et faire les sites web avec les html, les css, et les javascript, et donne moi tout les codes avec les noms de fichiers
