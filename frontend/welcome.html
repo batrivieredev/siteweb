@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de Bord</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url('/images/background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.5);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #007BFF;
+        }
+
+        p {
+            margin-bottom: 20px;
+            font-size: 1.1em;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1em;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+
+        .username {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-weight: bold;
+            font-size: 1.2em;
+            cursor: pointer;
+            color: #ff0000;
+        }
+
+        .settings-panel {
+            position: absolute;
+            top: 60px;
+            left: 20px; /* Changed from right to left */
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: none;
+            width: 300px;
+        }
+
+        .settings-panel input {
+            margin-bottom: 10px;
+            padding: 10px;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .settings-panel button {
+            width: 100%;
+        }
+
+        .settings-icon {
+            position: absolute;
+            top: 20px;
+            left: 20px; /* Changed from right to left */
+            font-size: 1.5em;
+            cursor: pointer;
+            color: #73ff00;
+        }
+
+        .settings-icon:hover {
+            color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="settings-icon" id="settings-icon">&#9881;</div>
+    <div class="username" id="username"></div>
+    <div class="settings-panel" id="settings-panel">
+        <input type="text" id="new-username" placeholder="Nouveau nom d'utilisateur">
+        <input type="password" id="new-password" placeholder="Nouveau mot de passe">
+        <button id="update-button">Mettre à jour</button>
+    </div>
+    <div class="container">
+        <h2 id="welcome-message">Bienvenue sur votre tableau de bord</h2>
+        <p>Vous êtes connecté en tant que <span id="username-placeholder"></span></p>
+        <button id="logout-button">Se déconnecter</button>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            checkSession();
+        });
+
+        function checkSession() {
+            fetch('http://127.0.0.1:5000/check_session', {
+                method: 'GET',
+                credentials: 'include'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.logged_in) {
+                    document.getElementById('username').textContent = data.username;
+                    document.getElementById('username-placeholder').textContent = data.username;
+                    document.getElementById('settings-icon').addEventListener('click', function() {
+                        document.getElementById('settings-panel').style.display = 'block';
+                    });
+                } else {
+                    window.location.href = 'index.html';
+                }
+            });
+        }
+
+        document.getElementById('logout-button').addEventListener('click', function() {
+            fetch('http://127.0.0.1:5000/logout', {
+                method: 'POST',
+                credentials: 'include'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = 'index.html';
+                }
+            });
+        });
+
+        document.getElementById('update-button').addEventListener('click', function() {
+            const newUsername = document.getElementById('new-username').value;
+            const newPassword = document.getElementById('new-password').value;
+
+            fetch('http://127.0.0.1:5000/update_user', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    username: newUsername || undefined,
+                    password: newPassword || undefined
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    if (newUsername) {
+                        document.getElementById('username').textContent = newUsername;
+                        document.getElementById('username-placeholder').textContent = newUsername;
+                    }
+                    document.getElementById('settings-panel').style.display = 'none';
+                } else {
+                    alert('Erreur lors de la mise à jour');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
