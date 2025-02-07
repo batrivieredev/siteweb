@@ -4,119 +4,79 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tableau de Bord</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background: url('/images/background.jpg') no-repeat center center fixed;
-            background-size: cover;
-            color: #333;
-        }
-
-        .container {
-            background: rgba(255, 255, 255, 0.5);
-            padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            max-width: 500px;
-            width: 100%;
-        }
-
-        h2 {
-            margin-bottom: 20px;
-            color: #007BFF;
-        }
-
-        p {
-            margin-bottom: 20px;
-            font-size: 1.1em;
-        }
-
-        button {
-            padding: 10px 20px;
-            background: #007BFF;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            font-size: 1em;
-            transition: background 0.3s ease;
-        }
-
-        button:hover {
-            background: #0056b3;
-        }
-
-        .username {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-weight: bold;
-            font-size: 1.2em;
-            cursor: pointer;
-            color: #ff0000;
-        }
-
-        .settings-panel {
-            position: absolute;
-            top: 60px;
-            left: 20px; /* Changed from right to left */
-            background: rgba(255, 255, 255, 0.95);
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            display: none;
-            width: 300px;
-        }
-
-        .settings-panel input {
-            margin-bottom: 10px;
-            padding: 10px;
-            width: 100%;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        .settings-panel button {
-            width: 100%;
-        }
-
-        .settings-icon {
-            position: absolute;
-            top: 20px;
-            left: 20px; /* Changed from right to left */
-            font-size: 1.5em;
-            cursor: pointer;
-            color: #73ff00;
-        }
-
-        .settings-icon:hover {
-            color: #0056b3;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css"> <!-- Lien vers le fichier CSS -->
 </head>
-<body>
-    <div class="settings-icon" id="settings-icon">&#9881;</div>
-    <div class="username" id="username"></div>
-    <div class="settings-panel" id="settings-panel">
-        <input type="text" id="new-username" placeholder="Nouveau nom d'utilisateur">
-        <input type="password" id="new-password" placeholder="Nouveau mot de passe">
-        <button id="update-button">Mettre à jour</button>
+<body class="welcome-page"> <!-- Classe pour styliser la page de bienvenue -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-left">
+                <span id="username" class="username"></span> <!-- Affichage du nom d'utilisateur -->
+                <span id="user-role" class="user-role"></span> <!-- Affichage du rôle de l'utilisateur -->
+            </div>
+            <div class="navbar-right">
+                <button id="update-info-button" class="nav-button">Modifier mes informations</button> <!-- Bouton pour modifier les informations -->
+                <button id="create-user-button" class="nav-button">Créer un nouvel utilisateur</button> <!-- Bouton pour créer un nouvel utilisateur -->
+                <button id="view-users-button" class="nav-button">Voir les utilisateurs</button> <!-- Bouton pour voir les utilisateurs -->
+                <button id="hide-users-button" class="nav-button" style="display: none;">Cacher les utilisateurs</button> <!-- Bouton pour cacher les utilisateurs -->
+                <button id="logout-button" class="nav-button" style="margin-left: auto;">Se déconnecter</button> <!-- Bouton de déconnexion -->
+            </div>
+        </div>
+    </nav>
+    <div class="container" id="main-container">
+        <div id="welcome-message" class="welcome-message" style="display: none;"></div> <!-- Message de bienvenue -->
+        <div id="user-list" style="display: none;">
+            <ul id="users"></ul>
+        </div>
     </div>
-    <div class="container">
-        <h2 id="welcome-message">Bienvenue sur votre tableau de bord</h2>
-        <p>Vous êtes connecté en tant que <span id="username-placeholder"></span></p>
-        <button id="logout-button">Se déconnecter</button>
+
+    <!-- Modal pour mettre à jour les informations -->
+    <div id="settings-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="close-modal">&times;</span>
+            <h3>Mettre à jour les informations</h3>
+            <form id="update-form">
+                <input type="text" id="new-username" placeholder="Nouveau nom d'utilisateur">
+                <input type="password" id="new-password" placeholder="Nouveau mot de passe">
+                <button type="submit">Mettre à jour</button>
+            </form>
+        </div>
     </div>
-    <script src="script.js"></script>
+
+    <!-- Modal pour l'inscription d'un nouvel utilisateur par un administrateur -->
+    <div id="admin-registration" class="modal">
+        <div class="modal-content">
+            <span class="close" id="close-register-modal">&times;</span>
+            <h3>Créer un nouvel utilisateur</h3>
+            <form id="register-form">
+                <input type="text" id="register-username" placeholder="Nom d'utilisateur" required>
+                <input type="password" id="register-password" placeholder="Mot de passe" required>
+                <label>
+                    <input type="checkbox" id="is-admin"> Administrateur
+                </label>
+                <button type="submit">Créer</button>
+            </form>
+            <p id="register-error-message"></p> <!-- Message d'erreur pour l'inscription -->
+        </div>
+    </div>
+
+    <!-- Modal pour mettre à jour les informations d'un utilisateur par l'administrateur -->
+    <div id="admin-update-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="close-admin-update-modal">&times;</span>
+            <h3>Mettre à jour les informations de l'utilisateur</h3>
+            <form id="admin-update-form">
+                <input type="text" id="admin-update-current-username" placeholder="Nom d'utilisateur actuel" readonly>
+                <input type="text" id="admin-update-new-username" placeholder="Nouveau nom d'utilisateur">
+                <input type="password" id="admin-update-password" placeholder="Nouveau mot de passe">
+                <button type="submit">Mettre à jour</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script> <!-- Lien vers le fichier JavaScript -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            checkSession();
+            checkSession(); // Vérifier la session à chaque chargement de la page
         });
 
         function checkSession() {
@@ -128,12 +88,23 @@
             .then(data => {
                 if (data.logged_in) {
                     document.getElementById('username').textContent = data.username;
-                    document.getElementById('username-placeholder').textContent = data.username;
-                    document.getElementById('settings-icon').addEventListener('click', function() {
-                        document.getElementById('settings-panel').style.display = 'block';
-                    });
+                    document.getElementById('user-role').textContent = data.is_admin ? '(Administrateur)' : '(Utilisateur)';
+                    document.getElementById('welcome-message').textContent = `Bienvenue ${data.username}`;
+                    document.getElementById('welcome-message').style.display = 'block';
+                    setTimeout(() => {
+                        document.getElementById('welcome-message').style.display = 'none';
+                        // Supprimer ou commenter la ligne suivante pour éviter de cacher le conteneur principal
+                        // document.getElementById('main-container').style.display = 'none';
+                    }, 5000);
+                    if (data.is_admin) {
+                        document.getElementById('create-user-button').style.display = 'inline-block';
+                        document.getElementById('view-users-button').style.display = 'inline-block';
+                    } else {
+                        document.getElementById('create-user-button').style.display = 'none';
+                        document.getElementById('view-users-button').style.display = 'none';
+                    }
                 } else {
-                    window.location.href = 'index.html';
+                    window.location.href = 'index.html'; // Rediriger vers la page de connexion si non connecté
                 }
             });
         }
@@ -147,37 +118,140 @@
             .then(data => {
                 if (data.success) {
                     window.location.href = 'index.html';
+                } else {
+                    alert('Erreur lors de la déconnexion');
                 }
             });
         });
 
-        document.getElementById('update-button').addEventListener('click', function() {
-            const newUsername = document.getElementById('new-username').value;
-            const newPassword = document.getElementById('new-password').value;
+        document.getElementById('update-info-button').addEventListener('click', function() {
+            document.getElementById('settings-modal').style.display = 'block'; // Afficher le modal pour mettre à jour les informations
+        });
 
-            fetch('http://127.0.0.1:5000/update_user', {
+        document.getElementById('create-user-button').addEventListener('click', function() {
+            document.getElementById('admin-registration').style.display = 'block'; // Afficher le modal pour créer un nouvel utilisateur
+        });
+
+        document.getElementById('view-users-button').addEventListener('click', function() {
+            fetchUsers();
+        });
+
+        document.getElementById('hide-users-button').addEventListener('click', function() {
+            document.getElementById('user-list').style.display = 'none';
+            document.getElementById('hide-users-button').style.display = 'none';
+            document.getElementById('view-users-button').style.display = 'inline-block';
+        });
+
+        function fetchUsers() {
+            fetch('http://127.0.0.1:5000/get_users', {
+                method: 'GET',
+                credentials: 'include'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const users = document.getElementById('users');
+                    users.innerHTML = '';
+                    data.users.forEach(user => {
+                        const li = document.createElement('li');
+                        li.textContent = `${user.username} (${user.is_admin ? 'Admin' : 'User'})`;
+                        const deleteButton = document.createElement('button');
+                        deleteButton.textContent = 'Supprimer';
+                        deleteButton.addEventListener('click', function() {
+                            deleteUser(user.username);
+                        });
+                        const updateButton = document.createElement('button');
+                        updateButton.textContent = 'Modifier';
+                        updateButton.addEventListener('click', function() {
+                            openAdminUpdateModal(user.username);
+                        });
+                        li.appendChild(deleteButton);
+                        li.appendChild(updateButton);
+                        users.appendChild(li);
+                    });
+                    document.getElementById('user-list').style.display = 'block';
+                    document.getElementById('view-users-button').style.display = 'none';
+                    document.getElementById('hide-users-button').style.display = 'inline-block';
+                }
+            });
+        }
+
+        function deleteUser(username) {
+            fetch('http://127.0.0.1:5000/delete_user', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Utilisateur supprimé avec succès');
+                    fetchUsers(); // Rafraîchir la liste des utilisateurs
+                } else {
+                    alert('Erreur lors de la suppression de l\'utilisateur');
+                }
+            });
+        }
+
+        function openAdminUpdateModal(username) {
+            document.getElementById('admin-update-current-username').value = username;
+            document.getElementById('admin-update-modal').style.display = 'block'; // Afficher le modal de mise à jour admin
+        }
+
+        document.getElementById('admin-update-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const currentUsername = document.getElementById('admin-update-current-username').value;
+            const newUsername = document.getElementById('admin-update-new-username').value;
+            const newPassword = document.getElementById('admin-update-password').value;
+
+            fetch('http://127.0.0.1:5000/admin_update_user', {
                 method: 'POST',
                 credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    username: newUsername || undefined,
-                    password: newPassword || undefined
+                    current_username: currentUsername,
+                    new_username: newUsername || undefined,
+                    new_password: newPassword || undefined
                 })
             })
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    if (newUsername) {
-                        document.getElementById('username').textContent = newUsername;
-                        document.getElementById('username-placeholder').textContent = newUsername;
-                    }
-                    document.getElementById('settings-panel').style.display = 'none';
+                    document.getElementById('admin-update-modal').style.display = 'none'; // Fermer le modal après mise à jour
+                    fetchUsers(); // Rafraîchir la liste des utilisateurs
                 } else {
                     alert('Erreur lors de la mise à jour');
                 }
             });
+        });
+
+        document.getElementById('close-modal').addEventListener('click', function() {
+            document.getElementById('settings-modal').style.display = 'none'; // Fermer le modal de mise à jour
+        });
+
+        document.getElementById('close-register-modal').addEventListener('click', function() {
+            document.getElementById('admin-registration').style.display = 'none'; // Fermer le modal d'inscription
+        });
+
+        document.getElementById('close-admin-update-modal').addEventListener('click', function() {
+            document.getElementById('admin-update-modal').style.display = 'none'; // Fermer le modal de mise à jour admin
+        });
+
+        window.addEventListener('click', function(event) {
+            if (event.target == document.getElementById('settings-modal')) {
+                document.getElementById('settings-modal').style.display = 'none'; // Fermer le modal de mise à jour si clic en dehors
+            }
+            if (event.target == document.getElementById('admin-registration')) {
+                document.getElementById('admin-registration').style.display = 'none'; // Fermer le modal d'inscription si clic en dehors
+            }
+            if (event.target == document.getElementById('admin-update-modal')) {
+                document.getElementById('admin-update-modal').style.display = 'none'; // Fermer le modal de mise à jour admin si clic en dehors
+            }
         });
     </script>
 </body>

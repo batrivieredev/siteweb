@@ -1,4 +1,3 @@
-/* Style général pour le corps de la page */
 body {
     font-family: Arial, sans-serif;
     display: flex;
@@ -6,40 +5,34 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    color: rgba(0, 0, 0, 0.1);
-    background-color: #f0f0f0;
-    font-size: 16px;
+    color: #000000;
 }
 
-/* Style spécifique pour la page d'accueil */
 body.index-page {
     background-color: #ffffff;
-    background-image: url('/images/background1.jpeg');
+    background-image: url('/images/background1.jpg'); /* Image de fond pour la page d'accueil */
     background-size: cover;
     background-position: center;
 }
 
-/* Style spécifique pour la page de bienvenue */
 body.welcome-page {
     background-color: #ffffff;
-    background-image: url('/images/background.jpg');
+    background-image: url('/images/background.jpg'); /* Image de fond pour la page de bienvenue */
     background-size: cover;
     background-position: center;
 }
 
-/* Style pour le conteneur principal */
 .container {
-    background: rgba(255, 255, 255, 0);
+    background: rgba(255, 255, 255, 0.9); /* Fond semi-transparent */
     padding: 40px;
-    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2); /* Ombre autour du conteneur */
     border-radius: 10px;
     text-align: center;
     max-width: 500px;
     width: 100%;
-    margin-top: 80px;
+    margin-top: 80px; /* Ajouter un espace en haut pour la barre de navigation */
 }
 
-/* Style pour les champs de saisie */
 input {
     display: block;
     margin: 10px auto;
@@ -49,7 +42,6 @@ input {
     border-radius: 5px;
 }
 
-/* Style pour les boutons */
 button {
     padding: 10px;
     background: #007BFF;
@@ -62,26 +54,22 @@ button {
     width: 100%;
 }
 
-/* Changement de couleur au survol des boutons */
 button:hover {
-    background: #00fff2;
+    background: #0056b3; /* Changement de couleur au survol */
 }
 
-/* Style pour les titres de niveau 1 */
 h1 {
     margin-bottom: 20px;
     font-size: 24px;
     color: #333;
 }
 
-/* Style pour les titres de niveau 2 */
 h2 {
     margin-bottom: 20px;
     font-size: 20px;
     color: #555;
 }
 
-/* Style pour les éléments déroulants */
 .dropdown {
     cursor: pointer;
     color: #007BFF;
@@ -89,19 +77,16 @@ h2 {
     font-size: 14px;
 }
 
-/* Contenu des éléments déroulants */
 .dropdown-content {
     display: none;
     margin-top: 10px;
 }
 
-/* Style pour les messages d'erreur */
 #error-message, #register-error-message {
     color: red;
     font-size: 14px;
 }
 
-/* Style pour le nom d'utilisateur */
 .username {
     color: white;
     font-weight: bold;
@@ -109,19 +94,26 @@ h2 {
     margin-right: 10px;
 }
 
-/* Style pour le rôle de l'utilisateur */
 .user-role {
-    color: rgb(255, 0, 0);
+    color: white;
     font-size: 1em;
     margin-right: 20px;
 }
 
-/* Changement de couleur au survol de l'icône des paramètres */
+.settings-icon {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: #73ff00;
+}
+
 .settings-icon:hover {
     color: #0056b3;
 }
 
-/* Style pour les modals */
+/* Styles pour les modals */
 .modal {
     display: none;
     position: fixed;
@@ -131,10 +123,9 @@ h2 {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.5); /* Fond semi-transparent pour le modal */
 }
 
-/* Contenu des modals */
 .modal-content {
     background-color: #fefefe;
     margin: 15% auto;
@@ -146,7 +137,6 @@ h2 {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Style pour le bouton de fermeture des modals */
 .close {
     color: #aaa;
     float: right;
@@ -154,7 +144,6 @@ h2 {
     font-weight: bold;
 }
 
-/* Changement de couleur au survol du bouton de fermeture des modals */
 .close:hover,
 .close:focus {
     color: black;
@@ -162,7 +151,6 @@ h2 {
     cursor: pointer;
 }
 
-/* Style pour les labels des cases à cocher */
 .checkbox-label {
     display: flex;
     align-items: center;
@@ -170,9 +158,8 @@ h2 {
     margin: 10px 0;
 }
 
-/* Réduire l'espace entre la case à cocher et le texte */
 .checkbox-label input {
-    margin-right: 2px;
+    margin-right: 2px; /* Réduire l'espace entre la case et le texte */
 }
 
 /* Styles pour la barre de navigation */
@@ -188,7 +175,7 @@ h2 {
 
 .navbar-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     padding: 10px 20px;
     max-width: 1200px;
@@ -205,7 +192,6 @@ h2 {
     align-items: center;
 }
 
-/* Style pour les boutons de la barre de navigation */
 .nav-button {
     background-color: #007BFF;
     color: rgb(255, 255, 255);
@@ -214,13 +200,10 @@ h2 {
     border-radius: 5px;
     font-size: 14px;
     padding: 8px 16px;
-    margin: 0 10px; /* Added missing semicolon */
+    margin-left: 5px;
+    transition: background 0.3s ease;
 }
 
-/* Style pour le conteneur de la liste des utilisateurs */
-#user-list {
-    background: rgb(0, 38, 255); /* Fond transparent */
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+.nav-button:hover {
+    background-color: #0073ee;
 }

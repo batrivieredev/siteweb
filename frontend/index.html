@@ -3,59 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        .dropdown {
-            cursor: pointer;
-            color: rgb(0, 0, 0);
-            text-decoration: underline;
-            font-size: 10px; /* Modifier cette valeur pour changer la taille du texte */
-        }
-
-        .dropdown-content {
-            display: none;
-            margin-top: 10px;
-        }
-
-        body {
-            background-image: url('/images/background1.jpeg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-    </style>
+    <title>Mon site</title>
+    <link rel="stylesheet" href="style.css"> <!-- Lien vers le fichier CSS -->
 </head>
-<body>
+<body class="index-page"> <!-- Classe pour styliser la page d'accueil -->
     <div class="container">
         <h1>Bienvenue sur notre site</h1>
         <h2>Connexion</h2>
-        <form id="login-form">
-            <input type="text" id="username" placeholder="Nom d'utilisateur" required>
-            <input type="password" id="password" placeholder="Mot de passe" required>
-            <button type="submit">Se connecter</button>
+        <form id="login-form"> <!-- Formulaire de connexion -->
+            <input type="text" id="username" placeholder="Nom d'utilisateur" required> <!-- Champ pour le nom d'utilisateur -->
+            <input type="password" id="password" placeholder="Mot de passe" required> <!-- Champ pour le mot de passe -->
+            <button type="submit">Se connecter</button> <!-- Bouton de soumission -->
         </form>
-        <p id="error-message"></p>
-        <h2 class="dropdown" onclick="toggleDropdown()">Inscription</h2>
-        <div class="dropdown-content" id="register-dropdown">
-            <form id="register-form">
-                <input type="text" id="register-username" placeholder="Nom d'utilisateur" required>
-                <input type="password" id="register-password" placeholder="Mot de passe" required>
-                <button type="submit">S'inscrire</button>
-            </form>
-            <p id="register-error-message"></p>
-        </div>
+        <p id="error-message"></p> <!-- Message d'erreur -->
     </div>
-    <script src="script.js"></script>
-    <script>
-        function toggleDropdown() {
-            var dropdownContent = document.getElementById("register-dropdown");
-            if (dropdownContent.style.display === "none" || dropdownContent.style.display === "") {
-                dropdownContent.style.display = "block";
-            } else {
-                dropdownContent.style.display = "none";
-            }
-        }
-    </script>
+    <script src="script.js"></script> <!-- Lien vers le fichier JavaScript -->
 </body>
 </html>
