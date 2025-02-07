@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const userList = document.getElementById('user-list');
     const createUserButton = document.getElementById('create-user-button');
     const updateInfoButton = document.getElementById('update-info-button');
+    const updateForm = document.getElementById('update-form');
+    const usernameSpan = document.getElementById('username');
 
     if (loginForm) {
         loginForm.addEventListener('submit', function(event) {
@@ -54,7 +56,32 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    if (window.location.pathname.includes('welcome.html')) {
+    if (updateForm) {
+        updateForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const newUsername = document.getElementById('new-username').value;
+            const newPassword = document.getElementById('new-password').value;
+
+            fetch('http://127.0.0.1:5000/update_user', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username: newUsername, password: newPassword }),
+                credentials: 'include'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    usernameSpan.innerText = newUsername;
+                    alert('Informations mises à jour avec succès');
+                    document.getElementById('settings-modal').style.display = 'none'; // Fermer le modal après mise à jour
+                } else {
+                    alert('Erreur lors de la mise à jour des informations');
+                }
+            });
+        });
+    }
+
+    if (window.location.pathname.includes('welcome.html') || window.location.pathname.includes('welcome_user.html') || window.location.pathname.includes('welcome_admin.html')) {
         checkSession();
     }
 });
@@ -72,7 +99,11 @@ function login() {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            window.location.href = 'welcome.html';
+            if (data.is_admin) {
+                window.location.href = 'welcome_admin.html';
+            } else {
+                window.location.href = 'welcome_user.html';
+            }
         } else {
             document.getElementById('error-message').innerText = data.message;
         }
@@ -190,3 +221,85 @@ function openAdminUpdateModal(username) {
     document.getElementById('admin-update-current-username').value = username;
     document.getElementById('admin-update-modal').style.display = 'block'; // Afficher le modal de mise à jour admin
 }
+
+document.getElementById('update-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const newUsername = document.getElementById('new-username').value;
+    const newPassword = document.getElementById('new-password').value;
+
+    fetch('http://127.0.0.1:5000/update_user', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            username: newUsername || undefined,
+            password: newPassword || undefined
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Informations mises à jour avec succès');
+            document.getElementById('settings-modal').style.display = 'none'; // Fermer le modal après mise à jour
+            document.getElementById('username').textContent = newUsername; // Mettre à jour le nom d'utilisateur en haut à droite
+        } else {
+            alert('Erreur lors de la mise à jour : ' + data.message);
+        }
+    });
+});
+
+document.getElementById('admin-update-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const currentUsername = document.getElementById('admin-update-current-username').value;
+    const newUsername = document.getElementById('admin-update-new-username').value;
+    const newPassword = document.getElementById('admin-update-password').value;
+
+    fetch('http://127.0.0.1:5000/admin_update_user', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            current_username: currentUsername,
+            new_username: newUsername || undefined,
+            new_password: newPassword || undefined
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Informations mises à jour avec succès');
+            document.getElementById('admin-update-modal').style.display = 'none'; // Fermer le modal après mise à jour
+            fetchUsers(); // Rafraîchir la liste des utilisateurs après mise à jour
+        } else {
+            alert('Erreur lors de la mise à jour : ' + data.message);
+        }
+    });
+});
+
+document.getElementById('close-modal').addEventListener('click', function() {
+    document.getElementById('settings-modal').style.display = 'none'; // Fermer le modal de mise à jour
+});
+
+document.getElementById('close-register-modal').addEventListener('click', function() {
+    document.getElementById('admin-registration').style.display = 'none'; // Fermer le modal d'inscription
+});
+
+document.getElementById('close-admin-update-modal').addEventListener('click', function() {
+    document.getElementById('admin-update-modal').style.display = 'none'; // Fermer le modal de mise à jour admin
+});
+
+window.addEventListener('click', function(event) {
+    if (event.target == document.getElementById('settings-modal')) {
+        document.getElementById('settings-modal').style.display = 'none';
+    }
+    if (event.target == document.getElementById('admin-registration')) {
+        document.getElementById('admin-registration').style.display = 'none';
+    }
+    if (event.target == document.getElementById('admin-update-modal')) {
+        document.getElementById('admin-update-modal').style.display = 'none';
+    }
+});

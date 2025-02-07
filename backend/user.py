@@ -19,9 +19,6 @@ def update_user():
     if 'username' not in session: # Vérifier si l'utilisateur est connecté
         return jsonify({'success': False, 'message': 'Utilisateur non connecté'})
 
-    if not session.get('is_admin'): # Vérifier si l'utilisateur est administrateur
-        return jsonify({'success': False, 'message': 'Accès refusé'})
-
     data = request.get_json()
     new_username = data.get('username')
     new_password = data.get('password')

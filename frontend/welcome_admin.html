@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tableau de Bord</title>
+    <title>Tableau de Bord Administrateur</title>
     <link rel="stylesheet" href="style.css"> <!-- Lien vers le fichier CSS -->
 </head>
 <body class="welcome-page"> <!-- Classe pour styliser la page -->
@@ -15,9 +15,13 @@
                 <span id="username" class="username"></span>
                 <span id="user-role" class="user-role"></span>
                 <span id="navbar-date-time" class="navbar-date-time"></span>
+                <span id="navbar-user-count" class="navbar-user-count"></span>
             </div>
             <div class="navbar-right">
                 <button id="update-info-button" class="nav-button">Modifier mes accès</button>
+                <button id="create-user-button" class="nav-button">Ajouter un utilisateur</button>
+                <button id="view-users-button" class="nav-button">Gérer les utilisateurs</button>
+                <button id="hide-users-button" class="nav-button" style="display: none;">Fermer</button>
                 <button id="logout-button" class="nav-button" style="margin-left: auto;">Se déconnecter</button>
             </div>
         </div>
@@ -46,6 +50,37 @@
         </div>
     </div>
 
+    <!-- Modal Ajouter un nouvel utilisateur -->
+    <div id="admin-registration" class="modal">
+        <div class="modal-content">
+            <span class="close" id="close-register-modal">&times;</span>
+            <h3>Créer un nouvel utilisateur</h3>
+            <form id="register-form">
+                <input type="text" id="register-username" placeholder="Nom d'utilisateur" required>
+                <input type="password" id="register-password" placeholder="Mot de passe" required>
+                <label class="checkbox-label">
+                    <input type="checkbox" id="is-admin"> Administrateur
+                </label>
+                <button type="submit">Créer</button>
+            </form>
+            <p id="register-error-message"></p>
+        </div>
+    </div>
+
+    <!-- Modal Modifier un utilisateur (Admin) -->
+    <div id="admin-update-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="close-admin-update-modal">&times;</span>
+            <h3>Mettre à jour un utilisateur</h3>
+            <form id="admin-update-form">
+                <input type="text" id="admin-update-current-username" placeholder="Nom d'utilisateur actuel" readonly>
+                <input type="text" id="admin-update-new-username" placeholder="Nouveau nom d'utilisateur">
+                <input type="password" id="admin-update-password" placeholder="Nouveau mot de passe">
+                <button type="submit">Mettre à jour</button>
+            </form>
+        </div>
+    </div>
+
     <!-- Pied de page -->
     <footer class="footer">
         <p>&copy; 2025 Tableau de Bord - Tous droits réservés</p>
@@ -61,8 +96,22 @@
                 document.getElementById('navbar-date-time').innerText = `${date} ${time}`;
             }
 
+            function fetchUserCount() {
+                fetch('http://127.0.0.1:5000/get_users', {
+                    method: 'GET',
+                    credentials: 'include'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById('navbar-user-count').innerText = `Utilisateurs: ${data.users.length}`;
+                    }
+                });
+            }
+
             updateDateTime();
             setInterval(updateDateTime, 1000); // Mettre à jour l'heure chaque seconde
+            fetchUserCount();
         });
     </script>
 </body>

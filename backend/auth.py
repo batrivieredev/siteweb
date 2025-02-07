@@ -2,11 +2,17 @@ from flask import request, jsonify, session
 from app import app
 import sqlite3
 import bcrypt
+import random
+import string
 
 DATABASE = "data.db"
 
 def connect_db():
     return sqlite3.connect(DATABASE) # Fonction pour se connecter à la base de données
+
+def generate_temp_password(length=8):
+    letters = string.ascii_letters + string.digits
+    return ''.join(random.choice(letters) for i in range(length))
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -23,7 +29,7 @@ def login():
     if user and bcrypt.checkpw(password, user[0].encode('utf-8')): # Vérifier le mot de passe
         session['username'] = username
         session['is_admin'] = user[1]
-        return jsonify({'success': True, 'message': 'Connexion réussie'})
+        return jsonify({'success': True, 'message': 'Connexion réussie', 'is_admin': user[1]})
     else:
         return jsonify({'success': False, 'message': 'Identifiants incorrects'})
 
@@ -51,3 +57,24 @@ def register():
         return jsonify({'success': False, 'message': 'Nom d\'utilisateur déjà pris'})
     finally:
         conn.close()
+
+@app.route('/recover_password', methods=['POST'])
+def recover_password():
+    data = request.get_json()
+    username = data.get('username')
+
+    conn = connect_db()
+    cursor = conn.cursor()
+    cursor.execute("SELECT id FROM users WHERE username=?", (username,))
+    user = cursor.fetchone()
+
+    if user:
+        temp_password = generate_temp_password()
+        hashed_password = bcrypt.hashpw(temp_password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+        cursor.execute("UPDATE users SET password=? WHERE username=?", (hashed_password, username))
+        conn.commit()
+        conn.close()
+        return jsonify({'success': True, 'message': 'Mot de passe temporaire généré', 'temp_password': temp_password})
+    else:
+        conn.close()
+        return jsonify({'success': False, 'message': 'Nom d\'utilisateur non trouvé'})
