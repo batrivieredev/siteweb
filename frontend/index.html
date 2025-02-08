@@ -4,19 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mon site</title>
-    <link rel="stylesheet" href="style.css"> <!-- Lien vers le fichier CSS -->
+    <link rel="stylesheet" href="style.css">
 </head>
-<body class="index-page"> <!-- Classe pour styliser la page d'accueil -->
+<body class="index-page">
     <div class="container">
         <h1>Bienvenue sur notre site</h1>
         <h2>Connexion</h2>
-        <form id="login-form"> <!-- Formulaire de connexion -->
-            <input type="text" id="username" placeholder="Nom d'utilisateur" required> <!-- Champ pour le nom d'utilisateur -->
-            <input type="password" id="password" placeholder="Mot de passe" required> <!-- Champ pour le mot de passe -->
-            <button type="submit">Se connecter</button> <!-- Bouton de soumission -->
+        <form id="login-form">
+            <input type="text" id="username" placeholder="Nom d'utilisateur" required>
+            <input type="password" id="password" placeholder="Mot de passe" required>
+            <button type="submit">Se connecter</button>
         </form>
-        <p id="error-message"></p> <!-- Message d'erreur -->
+        <p id="error-message"></p>
+
+        <button id="show-register-form" style="font-size: smaller;">Inscription</button>
+        <form id="register-form" style="display: none;">
+            <input type="text" id="register-nom" placeholder="Nom" required>
+            <input type="text" id="register-prenom" placeholder="Prénom" required>
+            <input type="text" id="register-username" placeholder="Nom d'utilisateur" required>
+            <input type="password" id="register-password" placeholder="Mot de passe" required>
+            <input type="text" id="register-question-secrete" placeholder="Question secrète" required>
+            <input type="text" id="register-reponse-secrete" placeholder="Réponse à la question secrète" required>
+            <button type="submit">S'inscrire</button>
+        </form>
+        <p id="register-error-message"></p>
+
+        <button id="show-reset-password-form" style="font-size: smaller;">Réinitialiser le mot de passe</button>
+        <form id="reset-password-form" style="display: none;">
+            <input type="text" id="reset-username" placeholder="Nom d'utilisateur" required>
+            <button type="button" id="get-question" style="font-size: smaller;">Obtenir la question secrète</button>
+            <div id="secret-question-container" style="display: none;">
+                <p id="secret-question"></p>
+                <input type="text" id="reset-reponse-secrete" placeholder="Réponse à la question secrète" required>
+                <button type="submit" style="font-size: smaller;">Réinitialiser le mot de passe</button>
+            </div>
+        </form>
+        <p id="reset-error-message"></p>
     </div>
-    <script src="script.js"></script> <!-- Lien vers le fichier JavaScript -->
+    <script src="script.js"></script>
 </body>
 </html>

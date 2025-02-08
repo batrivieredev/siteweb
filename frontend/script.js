@@ -84,6 +84,49 @@ document.addEventListener('DOMContentLoaded', function() {
     if (window.location.pathname.includes('welcome.html') || window.location.pathname.includes('welcome_user.html') || window.location.pathname.includes('welcome_admin.html')) {
         checkSession();
     }
+
+    const resetPasswordForm = document.getElementById('reset-password-form');
+    const showResetPasswordFormButton = document.getElementById('show-reset-password-form');
+    const getQuestionButton = document.getElementById('get-question');
+    const secretQuestionContainer = document.getElementById('secret-question-container');
+
+    if (showResetPasswordFormButton) {
+        showResetPasswordFormButton.addEventListener('click', function() {
+            resetPasswordForm.style.display = 'block';
+            showResetPasswordFormButton.style.display = 'none';
+        });
+    }
+
+    if (getQuestionButton) {
+        getQuestionButton.addEventListener('click', function() {
+            getSecretQuestion();
+        });
+    }
+
+    if (resetPasswordForm) {
+        resetPasswordForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            resetPassword();
+        });
+    }
+
+    // Ajout du formulaire d'inscription
+    const registerFormIndex = document.getElementById('register-form');
+    const showRegisterFormButton = document.getElementById('show-register-form');
+
+    if (showRegisterFormButton) {
+        showRegisterFormButton.addEventListener('click', function() {
+            registerFormIndex.style.display = 'block';
+            showRegisterFormButton.style.display = 'none';
+        });
+    }
+
+    if (registerFormIndex) {
+        registerFormIndex.addEventListener('submit', function(event) {
+            event.preventDefault();
+            registerUser();
+        });
+    }
 });
 
 function login() {
@@ -119,6 +162,33 @@ function register() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password, is_admin: isAdmin })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById('register-error-message').innerText = 'Inscription réussie. Vous pouvez maintenant vous connecter.';
+            setTimeout(() => {
+                document.getElementById('register-error-message').innerText = '';
+            }, 20000); // Attendre 20 secondes avant de vider le message
+        } else {
+            document.getElementById('register-error-message').innerText = data.message;
+        }
+    });
+}
+
+function registerUser() {
+    let nom = document.getElementById('register-nom').value;
+    let prenom = document.getElementById('register-prenom').value;
+    let username = document.getElementById('register-username').value;
+    let password = document.getElementById('register-password').value;
+    let questionSecrete = document.getElementById('register-question-secrete').value;
+    let reponseSecrete = document.getElementById('register-reponse-secrete').value;
+    let isAdmin = document.getElementById('is-admin').checked;
+
+    fetch('http://127.0.0.1:5000/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nom, prenom, username, password, question_secrete: questionSecrete, reponse_secrete: reponseSecrete, is_admin: isAdmin })
     })
     .then(response => response.json())
     .then(data => {
@@ -301,5 +371,146 @@ window.addEventListener('click', function(event) {
     }
     if (event.target == document.getElementById('admin-update-modal')) {
         document.getElementById('admin-update-modal').style.display = 'none';
+    }
+});
+
+// Fonction pour obtenir la question secrète
+function getSecretQuestion() {
+    let username = document.getElementById('reset-username').value;
+
+    fetch('http://127.0.0.1:5000/get_secret_question', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username }),
+        credentials: 'include'
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById('secret-question').innerText = data.question_secrete;
+            document.getElementById('secret-question-container').style.display = 'block';
+        } else {
+            document.getElementById('reset-error-message').innerText = data.message;
+        }
+    });
+}
+
+// Fonction pour réinitialiser le mot de passe
+function resetPassword() {
+    let username = document.getElementById('reset-username').value;
+    let reponseSecrete = document.getElementById('reset-reponse-secrete').value;
+
+    fetch('http://127.0.0.1:5000/reset_password', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, reponse_secrete: reponseSecrete }),
+        credentials: 'include'
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Mot de passe temporaire: ' + data.temp_password);
+            window.location.href = 'index.html';
+        } else {
+            document.getElementById('reset-error-message').innerText = data.message;
+        }
+    });
+}
+
+// Ajout du formulaire de réinitialisation de mot de passe
+const showResetPasswordFormButton = document.getElementById('show-reset-password-form');
+const resetPasswordForm = document.getElementById('reset-password-form');
+const getQuestionButton = document.getElementById('get-question');
+const secretQuestionContainer = document.getElementById('secret-question-container');
+
+if (showResetPasswordFormButton) {
+    showResetPasswordFormButton.addEventListener('click', function() {
+        resetPasswordForm.style.display = 'block';
+        showResetPasswordFormButton.style.display = 'none';
+    });
+}
+
+if (getQuestionButton) {
+    getQuestionButton.addEventListener('click', function() {
+        getSecretQuestion();
+    });
+}
+
+if (resetPasswordForm) {
+    resetPasswordForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        resetPassword();
+    });
+}
+
+// Ajout du formulaire d'inscription
+const registerFormIndex = document.getElementById('register-form');
+const showRegisterFormButton = document.getElementById('show-register-form');
+
+if (showRegisterFormButton) {
+    showRegisterFormButton.addEventListener('click', function() {
+        registerFormIndex.style.display = 'block';
+        showRegisterFormButton.style.display = 'none';
+    });
+}
+
+if (registerFormIndex) {
+    registerFormIndex.addEventListener('submit', function(event) {
+        event.preventDefault();
+        registerUser();
+    });
+}
+
+// Ajout des nouvelles fonctionnalités pour gérer les utilisateurs
+document.addEventListener('DOMContentLoaded', function() {
+    const adminUpdateForm = document.getElementById('admin-update-form');
+    const closeAdminUpdateModalButton = document.getElementById('close-admin-update-modal');
+
+    if (adminUpdateForm) {
+        adminUpdateForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const currentUsername = document.getElementById('admin-update-current-username').value;
+            const newNom = document.getElementById('admin-update-new-nom').value;
+            const newPrenom = document.getElementById('admin-update-new-prenom').value;
+            const newUsername = document.getElementById('admin-update-new-username').value;
+            const newPassword = document.getElementById('admin-update-password').value;
+            const newQuestionSecrete = document.getElementById('admin-update-question-secrete').value;
+            const newReponseSecrete = document.getElementById('admin-update-reponse-secrete').value;
+            const isAdmin = document.getElementById('admin-update-is-admin').checked;
+
+            fetch('http://127.0.0.1:5000/admin_update_user', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    current_username: currentUsername,
+                    new_nom: newNom || undefined,
+                    new_prenom: newPrenom || undefined,
+                    new_username: newUsername || undefined,
+                    new_password: newPassword || undefined,
+                    new_question_secrete: newQuestionSecrete || undefined,
+                    new_reponse_secrete: newReponseSecrete || undefined,
+                    is_admin: isAdmin
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Informations mises à jour avec succès');
+                    document.getElementById('admin-update-modal').style.display = 'none'; // Fermer le modal après mise à jour
+                    fetchUsers(); // Rafraîchir la liste des utilisateurs après mise à jour
+                } else {
+                    alert('Erreur lors de la mise à jour : ' + data.message);
+                }
+            });
+        });
+    }
+
+    if (closeAdminUpdateModalButton) {
+        closeAdminUpdateModalButton.addEventListener('click', function() {
+            document.getElementById('admin-update-modal').style.display = 'none'; // Fermer le modal de mise à jour admin
+        });
     }
 });

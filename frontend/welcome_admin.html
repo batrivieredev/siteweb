@@ -35,6 +35,23 @@
         <div id="user-list" style="display: none;">
             <ul id="users"></ul>
         </div>
+
+        <!-- Raccourcis vers des sites utiles -->
+        <div class="useful-links">
+            <h3>Sites Utiles</h3>
+            <ul>
+                <li><a href="https://www.google.com" target="_blank">Google</a></li>
+                <li><a href="https://www.github.com" target="_blank">GitHub</a></li>
+                <li><a href="https://www.stackoverflow.com" target="_blank">Stack Overflow</a></li>
+                <li><a href="https://www.wikipedia.org" target="_blank">Wikipedia</a></li>
+                <li><a href="https://www.reddit.com" target="_blank">Reddit</a></li>
+                <li><a href="https://www.linkedin.com" target="_blank">LinkedIn</a></li>
+                <li><a href="https://www.medium.com" target="_blank">Medium</a></li>
+                <li><a href="https://www.mozilla.org" target="_blank">Mozilla</a></li>
+                <li><a href="https://www.w3schools.com" target="_blank">W3Schools</a></li>
+                <li><a href="https://www.freecodecamp.org" target="_blank">freeCodeCamp</a></li>
+            </ul>
+        </div>
     </div>
 
     <!-- Modal Modifier mes informations -->
@@ -55,9 +72,14 @@
         <div class="modal-content">
             <span class="close" id="close-register-modal">&times;</span>
             <h3>Créer un nouvel utilisateur</h3>
-            <form id="register-form">
+            <button id="show-register-form" style="font-size: smaller;">Inscription</button>
+            <form id="register-form" style="display: none;">
+                <input type="text" id="register-nom" placeholder="Nom" required>
+                <input type="text" id="register-prenom" placeholder="Prénom" required>
                 <input type="text" id="register-username" placeholder="Nom d'utilisateur" required>
                 <input type="password" id="register-password" placeholder="Mot de passe" required>
+                <input type="text" id="register-question-secrete" placeholder="Question secrète" required>
+                <input type="text" id="register-reponse-secrete" placeholder="Réponse à la question secrète" required>
                 <label class="checkbox-label">
                     <input type="checkbox" id="is-admin"> Administrateur
                 </label>
@@ -74,8 +96,15 @@
             <h3>Mettre à jour un utilisateur</h3>
             <form id="admin-update-form">
                 <input type="text" id="admin-update-current-username" placeholder="Nom d'utilisateur actuel" readonly>
+                <input type="text" id="admin-update-new-nom" placeholder="Nom">
+                <input type="text" id="admin-update-new-prenom" placeholder="Prénom">
                 <input type="text" id="admin-update-new-username" placeholder="Nouveau nom d'utilisateur">
                 <input type="password" id="admin-update-password" placeholder="Nouveau mot de passe">
+                <input type="text" id="admin-update-question-secrete" placeholder="Question secrète">
+                <input type="text" id="admin-update-reponse-secrete" placeholder="Réponse à la question secrète">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="admin-update-is-admin"> Administrateur
+                </label>
                 <button type="submit">Mettre à jour</button>
             </form>
         </div>
@@ -83,7 +112,7 @@
 
     <!-- Pied de page -->
     <footer class="footer">
-        <p>&copy; 2025 Tableau de Bord - Tous droits réservés</p>
+        <p>&copy; 2025 Tableau de Bord - Baptiste RIVIERE - Tous droits réservés</p>
     </footer>
 
     <script src="script.js"></script>
