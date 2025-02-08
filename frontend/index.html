@@ -8,6 +8,8 @@
 </head>
 <body class="index-page">
     <div class="container">
+        <div id="current-time" class="current-time"></div> <!-- Ajout de l'élément pour afficher l'heure -->
+        <div id="current-date" class="current-date"></div> <!-- Ajout de l'élément pour afficher la date -->
         <h1>Bienvenue sur notre site</h1>
         <h2>Connexion</h2>
         <form id="login-form">
@@ -42,5 +44,19 @@
         <p id="reset-error-message"></p>
     </div>
     <script src="script.js"></script>
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            const dateString = now.toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            document.getElementById('current-time').innerText = timeString;
+            document.getElementById('current-date').innerText = dateString;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateTime();
+            setInterval(updateTime, 1000); // Met à jour l'heure chaque seconde
+        });
+    </script>
 </body>
 </html>

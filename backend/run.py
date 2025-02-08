@@ -1,4 +1,5 @@
-from app import app
+from app import socketio, app
+import eventlet
 
 if __name__ == '__main__':
-    app.run(debug=True) # Lancer l'application Flask en mode debug
+    socketio.run(app, debug=True)

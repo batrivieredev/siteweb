@@ -514,3 +514,82 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const openChatButton = document.getElementById('chat-button');
+    const closeChatButton = document.getElementById('close-chat-button');
+    const sendMessageButton = document.getElementById('send-message-button');
+    const messageInput = document.getElementById('message-input');
+    const messagesContainer = document.getElementById('messages');
+    const socket = io.connect('http://127.0.0.1:5000');
+
+    function fetchMessages() {
+        fetch('http://127.0.0.1:5000/get_messages', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({}),
+            credentials: 'include'
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                messagesContainer.innerHTML = '';
+                data.messages.forEach(msg => {
+                    const messageElement = document.createElement('div');
+                    messageElement.innerHTML = `
+                        <span>${msg.sender}: ${msg.message} (${msg.timestamp})</span>
+                        <button onclick="deleteMessage(${msg.id})">Supprimer</button>
+                    `;
+                    messageElement.className = msg.sender === document.getElementById('username').textContent ? 'message-sent' : 'message-received';
+                    messagesContainer.appendChild(messageElement); // Ajoute les messages au conteneur
+                });
+            }
+        });
+    }
+
+    function deleteMessage(messageId) {
+        fetch('http://127.0.0.1:5000/delete_message', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: messageId }),
+            credentials: 'include'
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                fetchMessages(); // Rafraîchit les messages après la suppression
+            }
+        });
+    }
+
+    openChatButton.addEventListener('click', function() {
+        document.getElementById('chat-container').style.display = 'block';
+        const sender = document.getElementById('username').textContent;
+        const receiver = 'receiver_user'; // Remplacez par le nom d'utilisateur du destinataire
+        fetchMessages(sender, receiver);
+    });
+
+    closeChatButton.addEventListener('click', function() {
+        document.getElementById('chat-container').style.display = 'none';
+    });
+
+    sendMessageButton.addEventListener('click', function() {
+        const message = messageInput.value;
+        const sender = document.getElementById('username').textContent;
+        const receiver = 'receiver_user'; // Remplacez par le nom d'utilisateur du destinataire
+
+        socket.emit('send_message', { sender, receiver, message });
+        messageInput.value = '';
+    });
+
+    socket.on('new_message', function(data) {
+        const sender = document.getElementById('username').textContent;
+        const messageElement = document.createElement('div');
+        messageElement.innerHTML = `
+            <span>${data.sender}: ${data.message}</span>
+            <button onclick="deleteMessage(${data.id})">Supprimer</button>
+        `;
+        messageElement.className = data.sender === sender ? 'message-sent' : 'message-received';
+        messagesContainer.appendChild(messageElement); // Ajoute le nouveau message au conteneur
+    });
+});

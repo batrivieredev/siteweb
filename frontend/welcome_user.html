@@ -12,74 +12,176 @@
     <nav class="navbar">
         <div class="navbar-container">
             <div class="navbar-left">
-                <span id="username" class="username"></span>
-                <span id="user-role" class="user-role"></span>
-                <span id="navbar-date-time" class="navbar-date-time"></span>
+                <span id="navbar-time" class="navbar-time"></span> <!-- Affiche l'heure -->
+                <span id="username" class="username"></span> <!-- Affiche le nom d'utilisateur -->
+                <span id="user-role" class="user-role"></span> <!-- Affiche le rôle de l'utilisateur -->
+                <span id="navbar-date-time" class="navbar-date-time"></span> <!-- Affiche la date -->
             </div>
             <div class="navbar-right">
-                <button id="update-info-button" class="nav-button">Modifier mes accès</button>
-                <button id="logout-button" class="nav-button" style="margin-left: auto;">Se déconnecter</button>
+                <button id="update-info-button" class="nav-button">Modifier mes accès</button> <!-- Bouton pour modifier les informations de l'utilisateur -->
+                <button id="open-chat-button" class="nav-button">Messagerie</button> <!-- Bouton pour ouvrir la messagerie -->
+                <button id="logout-button" class="nav-button" style="margin-left: auto;">Se déconnecter</button> <!-- Bouton pour se déconnecter -->
             </div>
         </div>
     </nav>
 
     <!-- Contenu principal -->
     <div class="container" id="main-container">
-        <div id="welcome-message" class="welcome-message" style="display: none;"></div>
+        <div id="welcome-message" class="welcome-message" style="display: none;"></div> <!-- Message de bienvenue -->
 
-        <!-- Liste des utilisateurs -->
-        <div id="user-list" style="display: none;">
-            <ul id="users"></ul>
-        </div>
+        <div class="content-wrapper">
+            <!-- Blog -->
+            <div class="blog-section">
+                <div id="posts-container"></div> <!-- Conteneur pour les posts -->
+            </div>
 
-        <!-- Raccourcis vers des sites utiles -->
-        <div class="useful-links">
-            <h3>Sites Utiles</h3>
-            <ul>
-                <li><a href="https://www.google.com" target="_blank">Google</a></li>
-                <li><a href="https://www.github.com" target="_blank">GitHub</a></li>
-                <li><a href="https://www.stackoverflow.com" target="_blank">Stack Overflow</a></li>
-                <li><a href="https://www.wikipedia.org" target="_blank">Wikipedia</a></li>
-                <li><a href="https://www.reddit.com" target="_blank">Reddit</a></li>
-                <li><a href="https://www.linkedin.com" target="_blank">LinkedIn</a></li>
-                <li><a href="https://www.medium.com" target="_blank">Medium</a></li>
-                <li><a href="https://www.mozilla.org" target="_blank">Mozilla</a></li>
-                <li><a href="https://www.w3schools.com" target="_blank">W3Schools</a></li>
-                <li><a href="https://www.freecodecamp.org" target="_blank">freeCodeCamp</a></li>
-            </ul>
+            <!-- Liste des utilisateurs -->
+            <div id="user-list" class="user-section" style="display: none;">
+                <ul id="users"></ul> <!-- Liste des utilisateurs -->
+            </div>
         </div>
+    </div>
+
+    <!-- Panneau de messagerie -->
+    <div id="chat-container" style="display: none;">
+        <div id="messages"></div> <!-- Conteneur pour les messages -->
+        <input type="text" id="message-input" placeholder="Tapez votre message..."> <!-- Champ pour saisir un message -->
+        <button id="send-message-button">Envoyer</button> <!-- Bouton pour envoyer le message -->
+        <button id="close-chat-button">Fermer</button> <!-- Bouton pour fermer la messagerie -->
     </div>
 
     <!-- Modal Modifier mes informations -->
     <div id="settings-modal" class="modal">
         <div class="modal-content">
-            <span class="close" id="close-modal">&times;</span>
+            <span class="close" id="close-modal">&times;</span> <!-- Bouton pour fermer le modal -->
             <h3>Mettre à jour mes accès</h3>
             <form id="update-form">
-                <input type="text" id="new-username" placeholder="Modifier mon nom d'utilisateur">
-                <input type="password" id="new-password" placeholder="Modifier mon mot de passe">
-                <button type="submit">Valider</button>
+                <input type="text" id="new-username" placeholder="Modifier mon nom d'utilisateur"> <!-- Champ pour modifier le nom d'utilisateur -->
+                <input type="password" id="new-password" placeholder="Modifier mon mot de passe"> <!-- Champ pour modifier le mot de passe -->
+                <button type="submit">Valider</button> <!-- Bouton pour valider les modifications -->
             </form>
         </div>
     </div>
 
     <!-- Pied de page -->
     <footer class="footer">
-        <p>&copy; 2025 Tableau de Bord - Baptiste RIVIERE - Tous droits réservés</p>
+        <p>&copy; 2025 Tableau de Bord - Baptiste RIVIERE - Tous droits réservés</p> <!-- Texte du pied de page -->
     </footer>
 
-    <script src="script.js"></script>
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script> <!-- Inclusion de la bibliothèque Socket.IO -->
+    <script src="script.js"></script> <!-- Inclusion du fichier JavaScript -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             function updateDateTime() {
                 const now = new Date();
                 const date = now.toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
                 const time = now.toLocaleTimeString('fr-FR');
-                document.getElementById('navbar-date-time').innerText = `${date} ${time}`;
+                document.getElementById('navbar-date-time').innerText = date; // Met à jour la date
+                document.getElementById('navbar-time').innerText = time; // Met à jour l'heure
             }
 
+            function fetchPosts() {
+                fetch('http://127.0.0.1:5000/get_posts', {
+                    method: 'GET',
+                    credentials: 'include'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const postsContainer = document.getElementById('posts-container');
+                        postsContainer.innerHTML = '';
+                        data.posts.forEach(post => {
+                            const postElement = document.createElement('div');
+                            postElement.className = 'post';
+                            postElement.innerHTML = `
+                                <h2>${post.title}</h2>
+                                <p>${post.content}</p>
+                                <p><small>Par ${post.author} le ${post.created_at}</small></p>
+                            `;
+                            postsContainer.appendChild(postElement); // Ajoute les posts au conteneur
+                        });
+                    }
+                });
+            }
+
+            document.getElementById('close-modal').addEventListener('click', function() {
+                document.getElementById('settings-modal').style.display = 'none'; // Ferme le modal de modification de post
+            });
+
+            // Gestion de la messagerie
+            const openChatButton = document.getElementById('open-chat-button');
+            const closeChatButton = document.getElementById('close-chat-button');
+            const sendMessageButton = document.getElementById('send-message-button');
+            const messageInput = document.getElementById('message-input');
+            const messagesContainer = document.getElementById('messages');
+            const socket = io.connect('http://127.0.0.1:5000');
+
+            function fetchMessages() {
+                fetch('http://127.0.0.1:5000/get_messages', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({}),
+                    credentials: 'include'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        messagesContainer.innerHTML = '';
+                        data.messages.forEach(msg => {
+                            const messageElement = document.createElement('div');
+                            messageElement.innerHTML = `
+                                <span>${msg.sender}: ${msg.message} (${msg.timestamp})</span>
+                            `;
+                            messageElement.className = msg.sender === document.getElementById('username').textContent ? 'message-sent' : 'message-received';
+                            messagesContainer.appendChild(messageElement); // Ajoute les messages au conteneur
+                        });
+                    }
+                });
+            }
+
+            openChatButton.addEventListener('click', function() {
+                document.getElementById('chat-container').style.display = 'block'; // Affiche le conteneur de messagerie
+                fetchMessages(); // Récupère tous les messages
+            });
+
+            closeChatButton.addEventListener('click', function() {
+                document.getElementById('chat-container').style.display = 'none'; // Ferme le conteneur de messagerie
+            });
+
+            sendMessageButton.addEventListener('click', function() {
+                const message = messageInput.value;
+                const sender = document.getElementById('username').textContent;
+                const receiver = 'receiver_user'; // Remplacez par le nom d'utilisateur du destinataire
+
+                socket.emit('send_message', { sender, receiver, message }); // Envoie le message via Socket.IO
+                messageInput.value = ''; // Vide le champ de saisie du message
+            });
+
+            socket.on('new_message', function(data) {
+                const sender = document.getElementById('username').textContent;
+                const messageElement = document.createElement('div');
+                messageElement.innerHTML = `
+                    <span>${data.sender}: ${data.message}</span>
+                `;
+                messageElement.className = data.sender === sender ? 'message-sent' : 'message-received';
+                messagesContainer.appendChild(messageElement); // Ajoute le nouveau message au conteneur
+            });
+
             updateDateTime();
-            setInterval(updateDateTime, 1000); // Mettre à jour l'heure chaque seconde
+            setInterval(updateDateTime, 1000); // Met à jour l'heure chaque seconde
+            fetchPosts();
+
+            // Vérifier si l'utilisateur est admin pour afficher le formulaire de création de post
+            fetch('http://127.0.0.1:5000/check_session', {
+                method: 'GET',
+                credentials: 'include'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.logged_in && data.is_admin) {
+                    document.getElementById('create-post-form').style.display = 'block'; // Affiche le formulaire pour les admins
+                }
+            });
         });
     </script>
 </body>

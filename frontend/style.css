@@ -1,345 +1,471 @@
 /* Style général pour le corps de la page */
 body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    color: rgba(0, 0, 4, 30);
-    background-color: #f0f0f0;
-    font-size: 16px;
-    box-shadow: 0px 0px 10px rgb(255, 0, 0);
+    font-family: Arial, sans-serif; /* Police de caractères */
+    display: flex; /* Utilisation de flexbox pour centrer le contenu */
+    justify-content: center; /* Centrer horizontalement */
+    align-items: center; /* Centrer verticalement */
+    height: 100vh; /* Hauteur de la page */
+    margin: 0; /* Pas de marge */
+    color: rgba(0, 0, 4, 30); /* Couleur du texte */
+    background-color: #f0f0f0; /* Couleur de fond */
+    font-size: 16px; /* Taille de la police */
+    box-shadow: 0px 0px 10px rgb(255, 0, 0); /* Ombre autour du corps */
 }
 
 /* Style spécifique pour la page d'accueil */
 body.index-page {
-    background-color: #ffffff;
-    background-image: url('/images/background1.jpeg');
-    background-size: cover;
-    background-position: center;
+    background-color: #ffffff; /* Couleur de fond */
+    background-image: url('/images/background1.jpeg'); /* Image de fond */
+    background-size: cover; /* Couvrir toute la page */
+    background-position: center; /* Centrer l'image */
 }
 
 /* Style spécifique pour la page de bienvenue */
 body.welcome-page {
-    background-color: #ffffff;
-    background-image: url('/images/background.jpg');
-    background-size: cover;
-    background-position: center;
-    color: #000000;
+    background-color: #ffffff; /* Couleur de fond */
+    background-image: url('/images/background.jpg'); /* Image de fond */
+    background-size: cover; /* Couvrir toute la page */
+    background-position: center; /* Centrer l'image */
+    color: #000000; /* Couleur du texte */
 }
 
 /* Style pour le conteneur principal */
 .container {
-    background: rgba(255, 255, 255, 0);
-    padding: 40px;
-    box-shadow: 0px 0px 10px rgb(255, 0, 0);
-    border-radius: 10px;
-    text-align: center;
-    max-width: 500px;
-    width: 100%;
-    margin-top: 80px;
+    background: rgba(255, 255, 255, 0); /* Fond transparent */
+    padding: 40px; /* Espacement intérieur */
+    box-shadow: 0px 0px 10px rgb(255, 0, 0); /* Ombre autour du conteneur */
+    border-radius: 10px; /* Coins arrondis */
+    text-align: center; /* Centrer le texte */
+    max-width: 500px; /* Largeur maximale */
+    width: 100%; /* Largeur de 100% */
+    margin-top: 80px; /* Marge en haut */
 }
 
 /* Style du message de bienvenue */
 .welcome-header {
-    text-align: center;
-    padding: 20px;
-    background-color: #007BFF;
-    color: white;
-    box-shadow: 0px 0px 10px rgb(255, 0, 0);
-    border-radius: 10px;
-    width: 80%;
-    margin: 20px auto;
+    text-align: center; /* Centrer le texte */
+    padding: 20px; /* Espacement intérieur */
+    background-color: #007BFF; /* Couleur de fond */
+    color: white; /* Couleur du texte */
+    box-shadow: 0px 0px 10px rgb(255, 0, 0); /* Ombre autour du message */
+    border-radius: 10px; /* Coins arrondis */
+    width: 80%; /* Largeur de 80% */
+    margin: 20px auto; /* Marge en haut et en bas, centré horizontalement */
 }
 
 .welcome-header h1 {
-    margin: 0;
-    font-size: 2em;
+    margin: 0; /* Pas de marge */
+    font-size: 2em; /* Taille de la police */
 }
 
 .welcome-header p {
-    font-size: 1.2em;
+    font-size: 1.2em; /* Taille de la police */
 }
 
 /* Style du pied de page */
 .footer {
-    text-align: center;
-    background: #343a40;
-    color: white;
-    padding: 10px;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    box-shadow: 0px 0px 10px rgb(255, 0, 0);
+    text-align: center; /* Centrer le texte */
+    background: #343a40; /* Couleur de fond */
+    color: white; /* Couleur du texte */
+    padding: 10px; /* Espacement intérieur */
+    position: fixed; /* Position fixe en bas de la page */
+    bottom: 0; /* Aligné en bas */
+    width: 100%; /* Largeur de 100% */
+    box-shadow: 0px 0px 10px rgb(255, 0, 0); /* Ombre autour du pied de page */
 }
 
 /* Style pour les champs de saisie */
 input {
-    display: block;
-    margin: 10px auto;
-    padding: 10px;
-    width: calc(100% - 20px);
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    display: block; /* Affichage en bloc */
+    margin: 10px auto; /* Marge en haut et en bas, centré horizontalement */
+    padding: 10px; /* Espacement intérieur */
+    width: calc(100% - 20px); /* Largeur calculée */
+    border: 1px solid #ccc; /* Bordure */
+    border-radius: 5px; /* Coins arrondis */
 }
 
 /* Style pour les boutons */
 button {
-    padding: 10px;
-    background: #007BFF;
-    color: rgb(0, 0, 0);
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 16px;
-    transition: background 0.3s ease;
-    width: 100%;
-    box-shadow: 0px 0px 10px rgb(255, 0, 0);
+    padding: 10px; /* Espacement intérieur */
+    background: #007BFF; /* Couleur de fond */
+    color: rgb(0, 0, 0); /* Couleur du texte */
+    border: none; /* Pas de bordure */
+    cursor: pointer; /* Curseur pointeur */
+    border-radius: 5px; /* Coins arrondis */
+    font-size: 16px; /* Taille de la police */
+    transition: background 0.3s ease; /* Transition pour le changement de fond */
+    width: 100%; /* Largeur de 100% */
+    box-shadow: 0px 0px 10px rgb(255, 0, 0); /* Ombre autour du bouton */
 }
 
 /* Changement de couleur au survol des boutons */
 button:hover {
-    background: #00fff2;
+    background: #00fff2; /* Couleur de fond au survol */
 }
 
 /* Style pour les titres */
 h1 {
-    margin-bottom: 20px;
-    font-size: 24px;
-    color: #070707;
+    margin-bottom: 20px; /* Marge en bas */
+    font-size: 24px; /* Taille de la police */
+    color: #070707; /* Couleur du texte */
 }
 
 h2 {
-    margin-bottom: 20px;
-    font-size: 20px;
-    color: #000000;
+    margin-bottom: 20px; /* Marge en bas */
+    font-size: 20px; /* Taille de la police */
+    color: #000000; /* Couleur du texte */
 }
 
 h3 {
-    margin-bottom: 20px;
-    font-size: 16px;
-    color: #000000;
+    margin-bottom: 20px; /* Marge en bas */
+    font-size: 16px; /* Taille de la police */
+    color: #000000; /* Couleur du texte */
 }
 
 h4 {
-    margin-bottom: 20px;
-    font-size: 12px;
-    color: #000000;
+    margin-bottom: 20px; /* Marge en bas */
+    font-size: 12px; /* Taille de la police */
+    color: #000000; /* Couleur du texte */
 }
+
 /* Style pour les éléments déroulants */
 .dropdown {
-    cursor: pointer;
-    color: #007BFF;
-    text-decoration: underline;
-    font-size: 14px;
+    cursor: pointer; /* Curseur pointeur */
+    color: #007BFF; /* Couleur du texte */
+    text-decoration: underline; /* Soulignement */
+    font-size: 14px; /* Taille de la police */
 }
 
 /* Contenu des éléments déroulants */
 .dropdown-content {
-    display: none;
-    margin-top: 10px;
+    display: none; /* Masquer par défaut */
+    margin-top: 10px; /* Marge en haut */
 }
 
 /* Style pour les messages d'erreur */
 #error-message, #register-error-message {
-    color: red;
-    font-size: 14px;
+    color: red; /* Couleur du texte */
+    font-size: 14px; /* Taille de la police */
 }
 
 /* Style pour le nom d'utilisateur */
 .username {
-    color: white;
-    font-weight: bold;
-    font-size: 1.2em;
-    margin-right: 10px;
+    color: white; /* Couleur du texte */
+    font-weight: bold; /* Texte en gras */
+    font-size: 1.2em; /* Taille de la police */
+    margin-right: 10px; /* Marge à droite */
 }
 
 /* Style pour le rôle de l'utilisateur */
 .user-role {
-    color: rgb(255, 0, 0);
-    font-size: 1em;
-    margin-right: 20px;
+    color: rgb(255, 0, 0); /* Couleur du texte */
+    font-size: 1em; /* Taille de la police */
+    margin-right: 20px; /* Marge à droite */
 }
 
 /* Style pour les modals */
 .modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.5);
-    box-shadow: 0px 0px 10px rgb(255, 0, 0);
+    display: none; /* Masquer par défaut */
+    position: fixed; /* Position fixe */
+    z-index: 1000; /* Niveau de superposition */
+    left: 0; /* Aligné à gauche */
+    top: 0; /* Aligné en haut */
+    width: 100%; /* Largeur de 100% */
+    height: 100%; /* Hauteur de 100% */
+    overflow: auto; /* Défilement automatique */
+    background-color: rgba(0, 0, 0, 0.5); /* Couleur de fond semi-transparente */
+    box-shadow: 0px 0px 10px rgb(255, 0, 0); /* Ombre autour du modal */
 }
 
 /* Contenu des modals */
 .modal-content {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 500px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fefefe; /* Couleur de fond */
+    margin: 15% auto; /* Marge en haut et en bas, centré horizontalement */
+    padding: 20px; /* Espacement intérieur */
+    border: 1px solid #888; /* Bordure */
+    width: 80%; /* Largeur de 80% */
+    max-width: 500px; /* Largeur maximale */
+    border-radius: 10px; /* Coins arrondis */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombre autour du contenu */
 }
 
 /* Style pour le bouton de fermeture des modals */
 .close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
+    color: #aaa; /* Couleur du texte */
+    float: right; /* Aligné à droite */
+    font-size: 28px; /* Taille de la police */
+    font-weight: bold; /* Texte en gras */
 }
 
 /* Changement de couleur au survol du bouton de fermeture des modals */
 .close:hover,
 .close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
+    color: black; /* Couleur du texte au survol */
+    text-decoration: none; /* Pas de soulignement */
+    cursor: pointer; /* Curseur pointeur */
 }
 
 /* Style pour les labels des cases à cocher */
 .checkbox-label {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 10px 0;
-    font-size: 16px;
-    color: #333;
+    display: flex; /* Utilisation de flexbox */
+    align-items: center; /* Aligner verticalement */
+    justify-content: center; /* Centrer horizontalement */
+    margin: 10px 0; /* Marge en haut et en bas */
+    font-size: 16px; /* Taille de la police */
+    color: #333; /* Couleur du texte */
 }
 
 /* Réduire l'espace entre la case à cocher et le texte */
 .checkbox-label input[type="checkbox"] {
-    margin-right: 10px;
-    width: 20px;
-    height: 20px;
+    margin-right: 10px; /* Marge à droite */
+    width: 20px; /* Largeur */
+    height: 20px; /* Hauteur */
 }
 
 /* Styles pour la barre de navigation */
 .navbar {
-    width: 100%;
-    background-color: #333;
-    overflow: hidden;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1000;
+    width: 100%; /* Largeur de 100% */
+    background-color: #333; /* Couleur de fond */
+    overflow: hidden; /* Masquer le débordement */
+    position: fixed; /* Position fixe */
+    top: 0; /* Aligné en haut */
+    left: 0; /* Aligné à gauche */
+    z-index: 1000; /* Niveau de superposition */
 }
 
 .navbar-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    max-width: 1200px;
-    margin: 0 auto;
+    display: flex; /* Utilisation de flexbox */
+    justify-content: space-between; /* Espacement entre les éléments */
+    align-items: center; /* Aligner verticalement */
+    padding: 10px 20px; /* Espacement intérieur */
+    max-width: 1200px; /* Largeur maximale */
+    margin: 0 auto; /* Centré horizontalement */
 }
 
 .navbar-left {
-    display: flex;
-    align-items: center;
+    display: flex; /* Utilisation de flexbox */
+    align-items: center; /* Aligner verticalement */
 }
 
 .navbar-right {
-    display: flex;
-    align-items: center;
+    display: flex; /* Utilisation de flexbox */
+    align-items: center; /* Aligner verticalement */
 }
 
 /* Style pour les boutons de la barre de navigation */
 .nav-button {
-    background-color: #007bff;
-    color: rgb(255, 255, 255);
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 14px;
-    padding: 8px 16px;
-    margin: 0 10px;
+    background-color: #007bff; /* Couleur de fond */
+    color: rgb(255, 255, 255); /* Couleur du texte */
+    border: none; /* Pas de bordure */
+    cursor: pointer; /* Curseur pointeur */
+    border-radius: 5px; /* Coins arrondis */
+    font-size: 14px; /* Taille de la police */
+    padding: 8px 16px; /* Espacement intérieur */
+    margin: 0 10px; /* Marge à gauche et à droite */
 }
 
 /* Style pour le conteneur de la liste des utilisateurs */
 #user-list {
-    background: rgb(255, 255, 255);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgb(255, 0, 0);
+    background: rgb(255, 255, 255); /* Couleur de fond */
+    padding: 20px; /* Espacement intérieur */
+    border-radius: 10px; /* Coins arrondis */
+    box-shadow: 0px 0px 10px rgb(255, 0, 0); /* Ombre autour du conteneur */
 }
 
 /* Styles ajoutés pour l'affichage de la date et de l'heure dans la barre de navigation */
 .navbar-date-time {
-    margin-left: 20px;
-    font-size: 1em;
-    color: #ffffff;
+    margin-left: 20px; /* Marge à gauche */
+    font-size: 1em; /* Taille de la police */
+    color: #ffffff; /* Couleur du texte */
 }
 
 /* Styles ajoutés pour l'affichage du nombre d'utilisateurs dans la barre de navigation */
 .navbar-user-count {
-    margin-left: 20px;
-    font-size: 1em;
-    color: #ffffff;
+    margin-left: 20px; /* Marge à gauche */
+    font-size: 1em; /* Taille de la police */
+    color: #ffffff; /* Couleur du texte */
 }
+
 /* Style pour la question secrète */
 #secret-question {
-    color: red;
+    color: red; /* Couleur du texte */
 }
+
 /* Style pour les liens utiles */
 .useful-links {
-    margin-top: 40px;
-    text-align: center;
+    margin-top: 40px; /* Marge en haut */
+    text-align: center; /* Centrer le texte */
 }
 
 .useful-links h3 {
-    font-size: 1.5em;
-    margin-bottom: 20px;
+    font-size: 1.5em; /* Taille de la police */
+    margin-bottom: 20px; /* Marge en bas */
 }
 
 .useful-links ul {
-    list-style-type: none;
-    padding: 0;
+    list-style-type: none; /* Pas de puces */
+    padding: 0; /* Pas de padding */
 }
 
 .useful-links li {
-    margin: 10px 0;
+    margin: 10px 0; /* Marge en haut et en bas */
 }
 
 .useful-links a {
-    display: inline-block;
-    padding: 12px 24px;
-    background-color: #007BFF;
-    color: white;
-    text-decoration: none;
-    font-size: 1.2em;
-    border-radius: 25px;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    position: relative;
-    overflow: hidden;
+    display: inline-block; /* Affichage en ligne */
+    padding: 12px 24px; /* Espacement intérieur */
+    background-color: #007BFF; /* Couleur de fond */
+    color: white; /* Couleur du texte */
+    text-decoration: none; /* Pas de soulignement */
+    font-size: 1.2em; /* Taille de la police */
+    border-radius: 25px; /* Coins arrondis */
+    transition: all 0.3s ease; /* Transition pour tous les changements */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Ombre autour du lien */
+    position: relative; /* Position relative */
+    overflow: hidden; /* Masquer le débordement */
 }
 
 .useful-links a::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 300%;
-    height: 300%;
-    background-color: rgba(255, 255, 255, 0.15);
-    transition: all 0.75s ease;
-    border-radius: 50%;
-    transform: translate(-50%, -50%) scale(0);
+    content: ''; /* Contenu vide */
+    position: absolute; /* Position absolue */
+    top: 50%; /* Aligné au centre verticalement */
+    left: 50%; /* Aligné au centre horizontalement */
+    width: 300%; /* Largeur de 300% */
+    height: 300%; /* Hauteur de 300% */
+    background-color: rgba(255, 255, 255, 0.15); /* Couleur de fond semi-transparente */
+    transition: all 0.75s ease; /* Transition pour tous les changements */
+    border-radius: 50%; /* Coins arrondis */
+    transform: translate(-50%, -50%) scale(0); /* Transformation initiale */
 }
 
 .useful-links a:hover::before {
-    transform: translate(-50%, -50%) scale(1);
+    transform: translate(-50%, -50%) scale(1); /* Transformation au survol */
 }
 
 .useful-links a:hover {
-    background-color: #0056b3;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    background-color: #0056b3; /* Couleur de fond au survol */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3); /* Ombre autour du lien au survol */
+}
+
+/* Styles pour la page de blog */
+.blog-page .post, .admin-blog-page .post, .welcome-page .post {
+    background: rgba(255, 255, 255, 0.9); /* Couleur de fond */
+    padding: 20px; /* Espacement intérieur */
+    margin: 20px 0; /* Marge en haut et en bas */
+    border-radius: 10px; /* Coins arrondis */
+    box-shadow: 0px 0px 10px rgb(255, 0, 0); /* Ombre autour du post */
+    color: #000; /* Couleur du texte */
+}
+
+.blog-page .post h2, .admin-blog-page .post h2, .welcome-page .post h2 {
+    margin: 0 0 10px; /* Marge en bas */
+    color: #000; /* Couleur du texte */
+}
+
+.blog-page .post p, .admin-blog-page .post p, .welcome-page .post p {
+    margin: 0 0 10px; /* Marge en bas */
+    color: #000; /* Couleur du texte */
+}
+
+/* Style pour les boutons de modification et suppression des posts */
+.admin-blog-page .post button, .welcome-page .post button {
+    margin-top: 10px; /* Marge en haut */
+    padding: 5px 10px; /* Espacement intérieur */
+    background: #007BFF; /* Couleur de fond */
+    color: #fff; /* Couleur du texte */
+    border: none; /* Pas de bordure */
+    cursor: pointer; /* Curseur pointeur */
+    border-radius: 5px; /* Coins arrondis */
+    font-size: 14px; /* Taille de la police */
+    transition: background 0.3s ease; /* Transition pour le changement de fond */
+}
+
+.admin-blog-page .post button:hover, .welcome-page .post button:hover {
+    background: #0056b3; /* Couleur de fond au survol */
+}
+
+/* Wrapper pour le contenu principal */
+.content-wrapper {
+    display: flex; /* Utilisation de flexbox */
+    justify-content: space-between; /* Espacement entre les éléments */
+    gap: 20px; /* Espacement entre les éléments */
+}
+
+/* Section du blog */
+.blog-section {
+    flex: 1; /* Prendre tout l'espace disponible */
+    background: rgba(255, 255, 255, 0.9); /* Couleur de fond */
+    padding: 20px; /* Espacement intérieur */
+    border-radius: 10px; /* Coins arrondis */
+    box-shadow: 0px 0px 10px rgb(255, 0, 0); /* Ombre autour de la section */
+}
+
+/* Section des utilisateurs */
+.user-section {
+    flex: 1; /* Prendre tout l'espace disponible */
+    background: rgba(255, 255, 255, 0.9); /* Couleur de fond */
+    padding: 20px; /* Espacement intérieur */
+    border-radius: 10px; /* Coins arrondis */
+    box-shadow: 0px 0px 10px rgb(255, 0, 0); /* Ombre autour de la section */
+}
+
+/* Style pour le conteneur de messagerie */
+#chat-container {
+    background-color: rgba(0, 0, 0, 0.8); /* Fond semi-transparent noir */
+    color: white; /* Couleur du texte */
+    padding: 20px; /* Espacement intérieur */
+    border-radius: 10px; /* Coins arrondis */
+    box-shadow: 0px 0px 10px rgb(255, 0, 0); /* Ombre autour du conteneur */
+    max-width: 600px; /* Largeur maximale */
+    margin: 20px auto; /* Centré horizontalement */
+}
+
+/* Style pour les messages */
+#messages {
+    max-height: 300px; /* Hauteur maximale */
+    overflow-y: auto; /* Défilement vertical */
+    margin-bottom: 20px; /* Marge en bas */
+}
+
+#messages div {
+    background-color: rgba(255, 255, 255, 0.1); /* Fond semi-transparent blanc */
+    padding: 10px; /* Espacement intérieur */
+    margin-bottom: 10px; /* Marge en bas */
+    border-radius: 5px; /* Coins arrondis */
+}
+
+/* Style pour les messages envoyés par l'utilisateur */
+#messages .message-sent {
+    background-color: rgba(0, 123, 255, 0.8); /* Fond bleu */
+    text-align: right; /* Aligner à droite */
+}
+
+/* Style pour les messages reçus */
+#messages .message-received {
+    background-color: rgba(255, 255, 255, 0.2); /* Fond gris clair */
+    text-align: left; /* Aligner à gauche */
+}
+
+/* Styles ajoutés pour l'affichage de l'heure dans la barre de navigation */
+.navbar-time {
+    font-size: 24px; /* Taille de la police pour l'heure */
+    color: white; /* Couleur du texte */
+    margin-right: 20px; /* Marge à droite */
+}
+
+/* Styles ajoutés pour l'affichage de la date dans la barre de navigation */
+.navbar-date-time {
+    font-size: 16px; /* Taille de la police pour la date */
+    color: white; /* Couleur du texte */
+    margin-left: 20px; /* Marge à gauche */
+}
+
+
+/* Styles pour l'affichage de l'heure et de la date sur la page d'accueil */
+.current-time, .current-date {
+    font-size: 40px; /* Taille de la police */
+    color: #007BFF; /* Couleur du texte */
+    margin-bottom: 10px; /* Marge en bas */
+    text-align: center; /* Centrer le texte */
+    font-weight: bold; /* Texte en gras */
 }

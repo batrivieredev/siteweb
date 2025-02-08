@@ -12,57 +12,62 @@
     <nav class="navbar">
         <div class="navbar-container">
             <div class="navbar-left">
-                <span id="username" class="username"></span>
-                <span id="user-role" class="user-role"></span>
-                <span id="navbar-date-time" class="navbar-date-time"></span>
-                <span id="navbar-user-count" class="navbar-user-count"></span>
+                <span id="navbar-time" class="navbar-time"></span> <!-- Affiche l'heure -->
+                <span id="username" class="username"></span> <!-- Affiche le nom d'utilisateur -->
+                <span id="user-role" class="user-role"></span> <!-- Affiche le rôle de l'utilisateur -->
+                <span id="navbar-date-time" class="navbar-date-time"></span> <!-- Affiche la date -->
+                <span id="navbar-user-count" class="navbar-user-count"></span> <!-- Affiche le nombre d'utilisateurs -->
             </div>
             <div class="navbar-right">
-                <button id="update-info-button" class="nav-button">Modifier mes accès</button>
-                <button id="create-user-button" class="nav-button">Ajouter un utilisateur</button>
-                <button id="view-users-button" class="nav-button">Gérer les utilisateurs</button>
-                <button id="hide-users-button" class="nav-button" style="display: none;">Fermer</button>
-                <button id="logout-button" class="nav-button" style="margin-left: auto;">Se déconnecter</button>
+                <button id="update-info-button" class="nav-button">Modifier mes accès</button> <!-- Bouton pour modifier les informations de l'utilisateur -->
+                <button id="create-user-button" class="nav-button">Ajouter un utilisateur</button> <!-- Bouton pour ajouter un utilisateur -->
+                <button id="view-users-button" class="nav-button">Gérer les utilisateurs</button> <!-- Bouton pour gérer les utilisateurs -->
+                <button id="hide-users-button" class="nav-button" style="display: none;">Fermer</button> <!-- Bouton pour fermer la gestion des utilisateurs -->
+                <button id="open-chat-button" class="nav-button">Messagerie</button> <!-- Bouton pour ouvrir la messagerie -->
+                <button id="logout-button" class="nav-button" style="margin-left: auto;">Se déconnecter</button> <!-- Bouton pour se déconnecter -->
             </div>
         </div>
     </nav>
 
     <!-- Contenu principal -->
     <div class="container" id="main-container">
-        <div id="welcome-message" class="welcome-message" style="display: none;"></div>
+        <div id="welcome-message" class="welcome-message" style="display: none;"></div> <!-- Message de bienvenue -->
 
-        <!-- Liste des utilisateurs -->
-        <div id="user-list" style="display: none;">
-            <ul id="users"></ul>
-        </div>
+        <div class="content-wrapper">
+            <!-- Blog Admin -->
+            <div class="blog-section">
+                <form id="create-post-form">
+                    <input type="text" id="post-title" placeholder="Titre" required> <!-- Champ pour le titre du post -->
+                    <textarea id="post-content" placeholder="Contenu" required></textarea> <!-- Champ pour le contenu du post -->
+                    <button type="submit">Publier</button> <!-- Bouton pour publier le post -->
+                </form>
+                <div id="posts-container"></div> <!-- Conteneur pour les posts -->
+            </div>
 
-        <!-- Raccourcis vers des sites utiles -->
-        <div class="useful-links">
-            <h3>Sites Utiles</h3>
-            <ul>
-                <li><a href="https://www.google.com" target="_blank">Google</a></li>
-                <li><a href="https://www.github.com" target="_blank">GitHub</a></li>
-                <li><a href="https://www.stackoverflow.com" target="_blank">Stack Overflow</a></li>
-                <li><a href="https://www.wikipedia.org" target="_blank">Wikipedia</a></li>
-                <li><a href="https://www.reddit.com" target="_blank">Reddit</a></li>
-                <li><a href="https://www.linkedin.com" target="_blank">LinkedIn</a></li>
-                <li><a href="https://www.medium.com" target="_blank">Medium</a></li>
-                <li><a href="https://www.mozilla.org" target="_blank">Mozilla</a></li>
-                <li><a href="https://www.w3schools.com" target="_blank">W3Schools</a></li>
-                <li><a href="https://www.freecodecamp.org" target="_blank">freeCodeCamp</a></li>
-            </ul>
+            <!-- Liste des utilisateurs -->
+            <div id="user-list" class="user-section" style="display: none;">
+                <ul id="users"></ul> <!-- Liste des utilisateurs -->
+            </div>
         </div>
+    </div>
+
+    <!-- Panneau de messagerie -->
+    <div id="chat-container" style="display: none;">
+        <div id="messages"></div> <!-- Conteneur pour les messages -->
+        <input type="text" id="message-input" placeholder="Tapez votre message..."> <!-- Champ pour saisir un message -->
+        <button id="send-message-button">Envoyer</button> <!-- Bouton pour envoyer le message -->
+        <button id="close-chat-button">Fermer</button> <!-- Bouton pour fermer la messagerie -->
     </div>
 
     <!-- Modal Modifier mes informations -->
     <div id="settings-modal" class="modal">
         <div class="modal-content">
-            <span class="close" id="close-modal">&times;</span>
+            <span class="close" id="close-modal">&times;</span> <!-- Bouton pour fermer le modal -->
             <h3>Mettre à jour mes accès</h3>
             <form id="update-form">
-                <input type="text" id="new-username" placeholder="Modifier mon nom d'utilisateur">
-                <input type="password" id="new-password" placeholder="Modifier mon mot de passe">
-                <button type="submit">Valider</button>
+                <input type="text" id="new-username" placeholder="Modifier mon nom d'utilisateur"> <!-- Champ pour modifier le nom d'utilisateur -->
+                <input type="password" id="new-password" placeholder="Modifier mon mot de passe"> <!-- Champ pour modifier le mot de passe -->
+                <button type="submit">Valider</button> <!-- Bouton pour valider les modifications -->
             </form>
         </div>
     </div>
@@ -70,59 +75,75 @@
     <!-- Modal Ajouter un nouvel utilisateur -->
     <div id="admin-registration" class="modal">
         <div class="modal-content">
-            <span class="close" id="close-register-modal">&times;</span>
+            <span class="close" id="close-register-modal">&times;</span> <!-- Bouton pour fermer le modal -->
             <h3>Créer un nouvel utilisateur</h3>
-            <button id="show-register-form" style="font-size: smaller;">Inscription</button>
+            <button id="show-register-form" style="font-size: smaller;">Inscription</button> <!-- Bouton pour afficher le formulaire d'inscription -->
             <form id="register-form" style="display: none;">
-                <input type="text" id="register-nom" placeholder="Nom" required>
-                <input type="text" id="register-prenom" placeholder="Prénom" required>
-                <input type="text" id="register-username" placeholder="Nom d'utilisateur" required>
-                <input type="password" id="register-password" placeholder="Mot de passe" required>
-                <input type="text" id="register-question-secrete" placeholder="Question secrète" required>
-                <input type="text" id="register-reponse-secrete" placeholder="Réponse à la question secrète" required>
+                <input type="text" id="register-nom" placeholder="Nom" required> <!-- Champ pour le nom -->
+                <input type="text" id="register-prenom" placeholder="Prénom" required> <!-- Champ pour le prénom -->
+                <input type="text" id="register-username" placeholder="Nom d'utilisateur" required> <!-- Champ pour le nom d'utilisateur -->
+                <input type="password" id="register-password" placeholder="Mot de passe" required> <!-- Champ pour le mot de passe -->
+                <input type="text" id="register-question-secrete" placeholder="Question secrète" required> <!-- Champ pour la question secrète -->
+                <input type="text" id="register-reponse-secrete" placeholder="Réponse à la question secrète" required> <!-- Champ pour la réponse à la question secrète -->
                 <label class="checkbox-label">
-                    <input type="checkbox" id="is-admin"> Administrateur
+                    <input type="checkbox" id="is-admin"> Administrateur <!-- Checkbox pour définir si l'utilisateur est administrateur -->
                 </label>
-                <button type="submit">Créer</button>
+                <button type="submit">Créer</button> <!-- Bouton pour créer l'utilisateur -->
             </form>
-            <p id="register-error-message"></p>
+            <p id="register-error-message"></p> <!-- Message d'erreur pour l'inscription -->
         </div>
     </div>
 
     <!-- Modal Modifier un utilisateur (Admin) -->
     <div id="admin-update-modal" class="modal">
         <div class="modal-content">
-            <span class="close" id="close-admin-update-modal">&times;</span>
+            <span class="close" id="close-admin-update-modal">&times;</span> <!-- Bouton pour fermer le modal -->
             <h3>Mettre à jour un utilisateur</h3>
             <form id="admin-update-form">
-                <input type="text" id="admin-update-current-username" placeholder="Nom d'utilisateur actuel" readonly>
-                <input type="text" id="admin-update-new-nom" placeholder="Nom">
-                <input type="text" id="admin-update-new-prenom" placeholder="Prénom">
-                <input type="text" id="admin-update-new-username" placeholder="Nouveau nom d'utilisateur">
-                <input type="password" id="admin-update-password" placeholder="Nouveau mot de passe">
-                <input type="text" id="admin-update-question-secrete" placeholder="Question secrète">
-                <input type="text" id="admin-update-reponse-secrete" placeholder="Réponse à la question secrète">
+                <input type="text" id="admin-update-current-username" placeholder="Nom d'utilisateur actuel" readonly> <!-- Champ pour le nom d'utilisateur actuel -->
+                <input type="text" id="admin-update-new-nom" placeholder="Nom"> <!-- Champ pour le nouveau nom -->
+                <input type="text" id="admin-update-new-prenom" placeholder="Prénom"> <!-- Champ pour le nouveau prénom -->
+                <input type="text" id="admin-update-new-username" placeholder="Nouveau nom d'utilisateur"> <!-- Champ pour le nouveau nom d'utilisateur -->
+                <input type="password" id="admin-update-password" placeholder="Nouveau mot de passe"> <!-- Champ pour le nouveau mot de passe -->
+                <input type="text" id="admin-update-question-secrete" placeholder="Question secrète"> <!-- Champ pour la nouvelle question secrète -->
+                <input type="text" id="admin-update-reponse-secrete" placeholder="Réponse à la question secrète"> <!-- Champ pour la nouvelle réponse à la question secrète -->
                 <label class="checkbox-label">
-                    <input type="checkbox" id="admin-update-is-admin"> Administrateur
+                    <input type="checkbox" id="admin-update-is-admin"> Administrateur <!-- Checkbox pour définir si l'utilisateur est administrateur -->
                 </label>
-                <button type="submit">Mettre à jour</button>
+                <button type="submit">Mettre à jour</button> <!-- Bouton pour mettre à jour l'utilisateur -->
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Modifier un post -->
+    <div id="edit-post-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="close-edit-post-modal">&times;</span> <!-- Bouton pour fermer le modal -->
+            <h3>Modifier le post</h3>
+            <form id="edit-post-form">
+                <input type="hidden" id="edit-post-id"> <!-- Champ caché pour l'ID du post -->
+                <input type="text" id="edit-post-title" placeholder="Titre" required> <!-- Champ pour le titre du post -->
+                <textarea id="edit-post-content" placeholder="Contenu" required></textarea> <!-- Champ pour le contenu du post -->
+                <button type="submit">Mettre à jour</button> <!-- Bouton pour mettre à jour le post -->
             </form>
         </div>
     </div>
 
     <!-- Pied de page -->
     <footer class="footer">
-        <p>&copy; 2025 Tableau de Bord - Baptiste RIVIERE - Tous droits réservés</p>
+        <p>&copy; 2025 Tableau de Bord - Baptiste RIVIERE - Tous droits réservés</p> <!-- Texte du pied de page -->
     </footer>
 
-    <script src="script.js"></script>
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script> <!-- Inclusion de la bibliothèque Socket.IO -->
+    <script src="script.js"></script> <!-- Inclusion du fichier JavaScript -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             function updateDateTime() {
                 const now = new Date();
                 const date = now.toLocaleDateString('fr-FR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
                 const time = now.toLocaleTimeString('fr-FR');
-                document.getElementById('navbar-date-time').innerText = `${date} ${time}`;
+                document.getElementById('navbar-date-time').innerText = date; // Met à jour la date
+                document.getElementById('navbar-time').innerText = time; // Met à jour l'heure
             }
 
             function fetchUserCount() {
@@ -133,14 +154,182 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        document.getElementById('navbar-user-count').innerText = `Utilisateurs: ${data.users.length}`;
+                        document.getElementById('navbar-user-count').innerText = `Utilisateurs: ${data.users.length}`; // Met à jour le nombre d'utilisateurs
                     }
                 });
             }
 
+            function fetchPosts() {
+                fetch('http://127.0.0.1:5000/get_posts', {
+                    method: 'GET',
+                    credentials: 'include'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const postsContainer = document.getElementById('posts-container');
+                        postsContainer.innerHTML = '';
+                        data.posts.forEach(post => {
+                            const postElement = document.createElement('div');
+                            postElement.className = 'post';
+                            postElement.innerHTML = `
+                                <h2>${post.title}</h2>
+                                <p>${post.content}</p>
+                                <p><small>Par ${post.author} le ${post.created_at}</small></p>
+                                <button onclick="editPost(${post.id}, '${post.title}', '${post.content}')">Modifier</button>
+                                <button onclick="deletePost(${post.id})">Supprimer</button>
+                            `;
+                            postsContainer.appendChild(postElement); // Ajoute les posts au conteneur
+                        });
+                    }
+                });
+            }
+
+            document.getElementById('create-post-form').addEventListener('submit', function(event) {
+                event.preventDefault();
+                const title = document.getElementById('post-title').value;
+                const content = document.getElementById('post-content').value;
+
+                fetch('http://127.0.0.1:5000/create_post', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ title, content }),
+                    credentials: 'include'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        fetchPosts(); // Rafraîchit les posts après la création
+                    }
+                });
+            });
+
+            window.editPost = function(postId, postTitle, postContent) {
+                document.getElementById('edit-post-id').value = postId;
+                document.getElementById('edit-post-title').value = postTitle;
+                document.getElementById('edit-post-content').value = postContent;
+                document.getElementById('edit-post-modal').style.display = 'block'; // Affiche le modal pour modifier le post
+            };
+
+            document.getElementById('edit-post-form').addEventListener('submit', function(event) {
+                event.preventDefault();
+                const postId = document.getElementById('edit-post-id').value;
+                const title = document.getElementById('edit-post-title').value;
+                const content = document.getElementById('edit-post-content').value;
+
+                fetch('http://127.0.0.1:5000/update_post', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: postId, title, content }),
+                    credentials: 'include'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        fetchPosts(); // Rafraîchit les posts après la mise à jour
+                        document.getElementById('edit-post-modal').style.display = 'none'; // Ferme le modal
+                    }
+                });
+            });
+
+            window.deletePost = function(postId) {
+                fetch('http://127.0.0.1:5000/delete_post', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: postId }),
+                    credentials: 'include'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        fetchPosts(); // Rafraîchit les posts après la suppression
+                    }
+                });
+            };
+
+            document.getElementById('close-edit-post-modal').addEventListener('click', function() {
+                document.getElementById('edit-post-modal').style.display = 'none'; // Ferme le modal de modification de post
+            });
+
+            // Gestion de la messagerie
+            const openChatButton = document.getElementById('open-chat-button');
+            const closeChatButton = document.getElementById('close-chat-button');
+            const sendMessageButton = document.getElementById('send-message-button');
+            const messageInput = document.getElementById('message-input');
+            const messagesContainer = document.getElementById('messages');
+            const socket = io.connect('http://127.0.0.1:5000');
+
+            function fetchMessages() {
+                fetch('http://127.0.0.1:5000/get_messages', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({})
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        messagesContainer.innerHTML = '';
+                        data.messages.forEach(msg => {
+                            const messageElement = document.createElement('div');
+                            messageElement.innerHTML = `
+                                <span>${msg.sender}: ${msg.message} (${msg.timestamp})</span>
+                                <button onclick="deleteMessage(${msg.id})">Supprimer</button>
+                            `;
+                            messageElement.className = msg.sender === document.getElementById('username').textContent ? 'message-sent' : 'message-received';
+                            messagesContainer.appendChild(messageElement); // Ajoute les messages au conteneur
+                        });
+                    }
+                });
+            }
+
+            openChatButton.addEventListener('click', function() {
+                document.getElementById('chat-container').style.display = 'block'; // Affiche le conteneur de messagerie
+                fetchMessages(); // Récupère tous les messages
+            });
+
+            closeChatButton.addEventListener('click', function() {
+                document.getElementById('chat-container').style.display = 'none'; // Ferme le conteneur de messagerie
+            });
+
+            sendMessageButton.addEventListener('click', function() {
+                const message = messageInput.value;
+                const sender = document.getElementById('username').textContent;
+                const receiver = 'receiver_user'; // Remplacez par le nom d'utilisateur du destinataire
+
+                socket.emit('send_message', { sender, receiver, message }); // Envoie le message via Socket.IO
+                messageInput.value = ''; // Vide le champ de saisie du message
+            });
+
+            window.deleteMessage = function(messageId) {
+                fetch('http://127.0.0.1:5000/delete_message', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id: messageId }),
+                    credentials: 'include'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        fetchMessages(); // Rafraîchit les messages après la suppression
+                    }
+                });
+            };
+
+            socket.on('new_message', function(data) {
+                const sender = document.getElementById('username').textContent;
+                const messageElement = document.createElement('div');
+                messageElement.innerHTML = `
+                    <span>${data.sender}: ${data.message}</span>
+                    <button onclick="deleteMessage(${data.id})">Supprimer</button>
+                `;
+                messageElement.className = data.sender === sender ? 'message-sent' : 'message-received';
+                messagesContainer.appendChild(messageElement); // Ajoute le nouveau message au conteneur
+            });
+
             updateDateTime();
-            setInterval(updateDateTime, 1000); // Mettre à jour l'heure chaque seconde
+            setInterval(updateDateTime, 1000); // Met à jour l'heure chaque seconde
             fetchUserCount();
+            fetchPosts();
         });
     </script>
 </body>
