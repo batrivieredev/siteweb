@@ -469,3 +469,29 @@ h4 {
     text-align: center; /* Centrer le texte */
     font-weight: bold; /* Texte en gras */
 }
+
+/* Style pour le conteneur des logs */
+.logs-section {
+    background: rgba(255, 255, 255, 0.9); /* Fond semi-transparent */
+    padding: 20px; /* Espacement intérieur */
+    box-shadow: 0px 0px 10px rgb(0, 0, 0); /* Ombre autour du conteneur */
+    border-radius: 10px; /* Coins arrondis */
+    text-align: left; /* Aligner le texte à gauche */
+    max-width: 800px; /* Largeur maximale */
+    width: 100%; /* Largeur de 100% */
+    margin: 20px auto; /* Marge en haut et en bas, centré horizontalement */
+    overflow-y: auto; /* Défilement vertical */
+    max-height: 400px; /* Hauteur maximale */
+}
+
+/* Style pour le contenu des logs */
+#logs-content {
+    white-space: pre-wrap; /* Conserver les sauts de ligne */
+    font-family: monospace; /* Police monospace */
+    color: #333; /* Couleur du texte */
+}
+
+/* Style pour le bouton "Cacher les logs" */
+#hide-logs-button {
+    margin-bottom: 10px; /* Marge en bas */
+}

@@ -593,3 +593,55 @@ document.addEventListener('DOMContentLoaded', function() {
         messagesContainer.appendChild(messageElement); // Ajoute le nouveau message au conteneur
     });
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+    const viewLogsButton = document.getElementById('view-logs-button');
+    const hideLogsButton = document.getElementById('hide-logs-button');
+    const logsContainer = document.getElementById('logs-container');
+    const logsContent = document.getElementById('logs-content');
+
+    if (viewLogsButton) {
+        viewLogsButton.addEventListener('click', function() {
+            fetch('http://127.0.0.1:5000/get_logs', {
+                method: 'GET',
+                credentials: 'include'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    logsContent.innerText = data.logs;
+                    logsContainer.style.display = 'block';
+                    hideLogsButton.style.display = 'inline-block';
+                    viewLogsButton.style.display = 'none';
+                } else {
+                    logsContent.innerText = 'Erreur lors de la récupération des logs';
+                }
+            });
+        });
+    }
+
+    if (hideLogsButton) {
+        hideLogsButton.addEventListener('click', function() {
+            logsContainer.style.display = 'none';
+            hideLogsButton.style.display = 'none';
+            viewLogsButton.style.display = 'inline-block';
+        });
+    }
+
+    // Fonction pour mettre à jour les logs en temps réel
+    function updateLogs() {
+        fetch('http://127.0.0.1:5000/get_logs', {
+            method: 'GET',
+            credentials: 'include'
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                logsContent.innerText = data.logs;
+            }
+        });
+    }
+
+    // Mettre à jour les logs toutes les 5 secondes
+    setInterval(updateLogs, 5000);
+});
