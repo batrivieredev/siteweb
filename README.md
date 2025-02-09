@@ -93,4 +93,5 @@ Assurez-vous d'avoir Python installé sur votre machine.
 - **Nom** : Baptiste RIVIERE
 - **Email** : baptiste.rivierefr@gmail.com
 
-
+## Commits
+- **e744e9c7fd94a046dffe5f35ed324ac916b10e40** : Site fonctionne correctement sans erreurs
