@@ -7,7 +7,7 @@ Ce projet est une application web simple permettant aux utilisateurs de s'inscri
 - **Backend** : Flask (Python), Flask-SocketIO
 - **Frontend** : HTML, CSS, JavaScript
 - **Base de données** : SQLite
-- **Sécurité** : Sessions Flask, CORS
+- **Sécurité** : Sessions Flask, CORS, bcrypt
 
 ## 3. Installation et Configuration
 
@@ -24,7 +24,7 @@ cd site_web
 
 #### 3.2.2 Créer un environnement virtuel et l'activer
 ```bash
-python -m venv venv
+python3 -m venv venv
 source venv/bin/activate  # Sur Mac/Linux
 venv\Scripts\activate  # Sur Windows
 ```
@@ -82,7 +82,7 @@ conn.close()
 
 #### 3.2.5 Lancer le serveur Flask avec Socket.IO
 ```bash
-python backend/run.py
+python3 backend/run.py
 ```
 
 #### 3.2.6 Ouvrir l'interface web
