@@ -93,7 +93,6 @@ Ouvrez `index.html` dans un navigateur.
 ## 4. Structure du projet
 
 ```
-/
 ├── backend/
 │   ├── __init__.py
 │   ├── app.py              # Configuration de l'application Flask et Socket.IO
