@@ -449,8 +449,12 @@ h4 {
 /* Styles ajoutés pour l'affichage de l'heure dans la barre de navigation */
 .navbar-time {
     font-size: 24px; /* Taille de la police pour l'heure */
-    color: white; /* Couleur du texte */
+    color: #ff0000; /* Couleur du texte rouge */
     margin-right: 20px; /* Marge à droite */
+    border: 2px solid #ff0000; /* Bordure rouge */
+    padding: 5px; /* Espacement intérieur */
+    border-radius: 5px; /* Coins arrondis */
+    box-shadow: 0px 0px 10px rgb(255, 0, 0); /* Ombre autour de l'heure */
 }
 
 /* Styles ajoutés pour l'affichage de la date dans la barre de navigation */
@@ -464,10 +468,11 @@ h4 {
 /* Styles pour l'affichage de l'heure et de la date sur la page d'accueil */
 .current-time, .current-date {
     font-size: 40px; /* Taille de la police */
-    color: #007BFF; /* Couleur du texte */
+    color : #ff0000; /* Couleur du texte */
     margin-bottom: 10px; /* Marge en bas */
     text-align: center; /* Centrer le texte */
     font-weight: bold; /* Texte en gras */
+    box-shadow: 0px 0px 10px rgb(255, 0, 0); /* Ombre autour de l'heure */
 }
 
 /* Style pour le conteneur des logs */
@@ -494,4 +499,11 @@ h4 {
 /* Style pour le bouton "Cacher les logs" */
 #hide-logs-button {
     margin-bottom: 10px; /* Marge en bas */
+}
+
+.nav-button-logs {
+    background-color: #ff0000; /* Couleur de fond rouge */
+    color: #ffffff; /* Couleur du texte blanc */
+    font-size: 12px; /* Taille de la police plus petite */
+    margin-right: 10px; /* Marge à droite pour espacer du bouton "Se déconnecter" */
 }

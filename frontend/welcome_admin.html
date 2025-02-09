@@ -24,6 +24,7 @@
                 <button id="view-users-button" class="nav-button">Gérer les utilisateurs</button> <!-- Bouton pour gérer les utilisateurs -->
                 <button id="hide-users-button" class="nav-button" style="display: none;">Fermer</button> <!-- Bouton pour fermer la gestion des utilisateurs -->
                 <button id="open-chat-button" class="nav-button">Messagerie</button> <!-- Bouton pour ouvrir la messagerie -->
+                <button id="view-logs-button" class="nav-button nav-button-logs">Voir les logs</button> <!-- Bouton pour voir les logs -->
                 <button id="logout-button" class="nav-button" style="margin-left: auto;">Se déconnecter</button> <!-- Bouton pour se déconnecter -->
             </div>
         </div>
@@ -324,6 +325,21 @@
                 `;
                 messageElement.className = data.sender === sender ? 'message-sent' : 'message-received';
                 messagesContainer.appendChild(messageElement); // Ajoute le nouveau message au conteneur
+            });
+
+            document.getElementById('view-logs-button').addEventListener('click', function() {
+                fetch('http://127.0.0.1:5000/get_logs', {
+                    method: 'GET',
+                    credentials: 'include'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.logs); // Affiche les logs dans une alerte
+                    } else {
+                        alert('Erreur lors de la récupération des logs');
+                    }
+                });
             });
 
             updateDateTime();
