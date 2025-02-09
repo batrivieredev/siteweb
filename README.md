@@ -143,10 +143,17 @@ Ouvrez `index.html` dans un navigateur.
 
 ---
 
-## 6. Améliorations possibles
-- Ajout d'un système de récupération de mot de passe.
-- Amélioration de l'interface utilisateur.
-- Ajout de notifications pour les nouveaux messages.
+## 6. Idées Améliorations possibles qui vont êtres mises à jour plus tard sur le site
+- Minification des fichiers Javascript et CSS, réduire leur taille et en faire plusieurs pour améliorer la vitesse de chargement.
+- Ajout de notifications pour les nouveaux messages et les nouveaux posts en tant réel
+- Voir pour une gestion par Https
+- Limitation de tentative de connexion
+- verification que le site s'adapte bien à tout type d'appareil
+- Amélioration du Css et du site avec Bootstrap
+- Ajout d'une barre de recherche pour les posts
+- Ajout d'un systeme de commentaire pour les posts du blog
+- Ajout de role suplémentaires comme modérateur, éditeurs...
+- Rédiger une documentation complète pour les administrateurs et les utilisateurs.
 
 ---
 
