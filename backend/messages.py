@@ -1,35 +1,48 @@
-from flask import request, jsonify, session  # Import Flask modules for handling requests, JSON responses, and sessions
-from app import app, socketio  # Import the Flask app and SocketIO instance
-import sqlite3  # Import SQLite3 for database operations
+from flask import request, jsonify, session
+from app import app, socketio
+import sqlite3
 
-DATABASE = "data.db"  # Define the database file
+DATABASE = "data.db"
 
 def connect_db():
-    return sqlite3.connect(DATABASE)  # Function to connect to the SQLite database
+    return sqlite3.connect(DATABASE)
 
-@app.route('/send_message', methods=['POST'])  # Define a route for sending messages, accepting POST requests
-def send_message():
-    data = request.get_json()  # Get JSON data from the request
-    sender = data.get('sender')  # Extract the sender from the JSON data
-    receiver = data.get('receiver')  # Extract the receiver from the JSON data
-    message = data.get('message')  # Extract the message from the JSON data
-
-    conn = connect_db()  # Connect to the database
-    cursor = conn.cursor()  # Create a cursor object to execute SQL queries
-    cursor.execute("INSERT INTO messages (sender_username, receiver_username, message) VALUES (?, ?, ?)",
-                   (sender, receiver, message))  # Insert the message into the database
-    conn.commit()  # Commit the transaction
-    conn.close()  # Close the database connection
-
-    socketio.emit('new_message', {'sender': sender, 'receiver': receiver, 'message': message}, broadcast=True)  # Emit the new message event via SocketIO
-    return jsonify({'success': True, 'message': 'Message envoyé avec succès'})  # Return a success response
-
-@app.route('/get_messages', methods=['POST'])  # Define a route for retrieving messages, accepting POST requests
+@app.route('/get_messages', methods=['POST'])
 def get_messages():
-    conn = connect_db()  # Connect to the database
-    cursor = conn.cursor()  # Create a cursor object to execute SQL queries
-    cursor.execute("SELECT id, sender_username, receiver_username, message, timestamp FROM messages ORDER BY timestamp")  # Retrieve all messages ordered by timestamp
-    messages = cursor.fetchall()  # Fetch all results from the executed query
-    conn.close()  # Close the database connection
+    conn = connect_db()
+    cursor = conn.cursor()
+    cursor.execute("SELECT id, sender_username, receiver_username, message, timestamp FROM messages ORDER BY timestamp")
+    messages = cursor.fetchall()
+    conn.close()
 
-    return jsonify({'success': True, 'messages': [{'id': msg[0], 'sender': msg[1], 'receiver': msg[2], 'message': msg[3], 'timestamp': msg[4]} for msg in messages]})  # Return the messages in JSON format
+    return jsonify({'success': True, 'messages': [{'id': msg[0], 'sender': msg[1], 'receiver': msg[2], 'message': msg[3], 'timestamp': msg[4]} for msg in messages]})
+
+@app.route('/delete_message', methods=['POST'])
+def delete_message():
+    data = request.get_json()
+    message_id = data.get('id')
+
+    conn = connect_db()
+    cursor = conn.cursor()
+    cursor.execute("DELETE FROM messages WHERE id=?", (message_id,))
+    conn.commit()
+    conn.close()
+
+    return jsonify({'success': True, 'message': 'Message supprimé avec succès'})
+
+@app.route('/send_message', methods=['POST'])
+def send_message():
+    data = request.get_json()
+    sender = data.get('sender')
+    receiver = data.get('receiver')
+    message = data.get('message')
+
+    conn = connect_db()
+    cursor = conn.cursor()
+    cursor.execute("INSERT INTO messages (sender_username, receiver_username, message) VALUES (?, ?, ?)",
+                   (sender, receiver, message))
+    conn.commit()
+    conn.close()
+
+    socketio.emit('new_message', {'sender': sender, 'receiver': receiver, 'message': message}, broadcast=True)
+    return jsonify({'success': True, 'message': 'Message envoyé avec succès'})

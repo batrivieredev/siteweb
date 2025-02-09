@@ -65,7 +65,7 @@
 
     <!-- Pied de page -->
     <footer class="footer">
-        <p>&copy; 2025 - Baptiste RIVIERE - Tous droits réservés</p> <!-- Texte du pied de page -->
+        <p>&copy; 2025 Tableau de Bord - Baptiste RIVIERE - Tous droits réservés</p> <!-- Texte du pied de page -->
     </footer>
 
     <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script> <!-- Inclusion de la bibliothèque Socket.IO -->
@@ -153,8 +153,24 @@
                 const sender = document.getElementById('username').textContent;
                 const receiver = 'receiver_user'; // Remplacez par le nom d'utilisateur du destinataire
 
-                socket.emit('send_message', { sender, receiver, message }); // Envoie le message via Socket.IO
-                messageInput.value = ''; // Vide le champ de saisie du message
+                fetch('http://127.0.0.1:5000/send_message', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ sender, receiver, message }),
+                    credentials: 'include'
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        socket.emit('send_message', { sender, receiver, message }); // Envoie le message via Socket.IO
+                        messageInput.value = ''; // Vide le champ de saisie du message
+                    } else {
+                        console.error('Erreur lors de l\'envoi du message:', data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Erreur lors de l\'envoi du message:', error);
+                });
             });
 
             socket.on('new_message', function(data) {

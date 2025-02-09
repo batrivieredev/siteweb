@@ -60,3 +60,18 @@ def get_logs():
         return jsonify({'success': True, 'logs': logs})
     except Exception as e:
         return jsonify({'success': False, 'message': str(e)})
+
+@app.route('/update_post', methods=['POST'])
+def update_post():
+    data = request.get_json()
+    post_id = data.get('id')
+    title = data.get('title')
+    content = data.get('content')
+
+    conn = connect_db()
+    cursor = conn.cursor()
+    cursor.execute("UPDATE posts SET title=?, content=? WHERE id=?", (title, content, post_id))
+    conn.commit()
+    conn.close()
+
+    return jsonify({'success': True, 'message': 'Post mis à jour avec succès'})

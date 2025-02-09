@@ -8,8 +8,8 @@
 </head>
 <body class="index-page">
     <div class="container">
-        <div id="current-time" class="current-time"></div> <!-- Ajout de l'élément pour afficher l'heure -->
-        <div id="current-date" class="current-date"></div> <!-- Ajout de l'élément pour afficher la date -->
+        <div id="current-time" class="current-time"></div>
+        <div id="current-date" class="current-date"></div>
         <h1>Bienvenue sur notre site</h1>
         <h2>Connexion</h2>
         <form id="login-form">
@@ -18,18 +18,6 @@
             <button type="submit">Se connecter</button>
         </form>
         <p id="error-message"></p>
-
-        <button id="show-register-form" style="font-size: smaller;">Inscription</button>
-        <form id="register-form" style="display: none;">
-            <input type="text" id="register-nom" placeholder="Nom" required>
-            <input type="text" id="register-prenom" placeholder="Prénom" required>
-            <input type="text" id="register-username" placeholder="Nom d'utilisateur" required>
-            <input type="password" id="register-password" placeholder="Mot de passe" required>
-            <input type="text" id="register-question-secrete" placeholder="Question secrète" required>
-            <input type="text" id="register-reponse-secrete" placeholder="Réponse à la question secrète" required>
-            <button type="submit">S'inscrire</button>
-        </form>
-        <p id="register-error-message"></p>
 
         <button id="show-reset-password-form" style="font-size: smaller;">Réinitialiser le mot de passe</button>
         <form id="reset-password-form" style="display: none;">
@@ -55,7 +43,7 @@
 
         document.addEventListener('DOMContentLoaded', function() {
             updateTime();
-            setInterval(updateTime, 1000); // Met à jour l'heure chaque seconde
+            setInterval(updateTime, 1000);
         });
     </script>
 </body>
