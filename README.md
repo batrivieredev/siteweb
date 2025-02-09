@@ -107,9 +107,10 @@ Ouvrez `index.html` dans un navigateur.
 │   ├── welcome_user.html   # Page d'accueil pour les utilisateurs
 │   ├── welcome_admin.html  # Page d'accueil pour les administrateurs
 │   ├── script.js           # Logique frontend (connexion, inscription, session, messagerie...)
-│   ├── style.css           # Styles CSS pour les pages HTML
-│   └── images/
-│       └── background.jpg  # Image de fond
+│   └── style.css           # Styles CSS pour les pages HTML
+├── images/
+│   ├── background1.jpeg    # Image de fond page accueil index.html
+│   └── background.jpg      # Image de fond
 └── data.db                 # Base de données SQLite
 ```
 
