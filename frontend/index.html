@@ -30,6 +30,22 @@
             </div>
         </form>
         <p id="reset-error-message"></p>
+
+        <!-- Formulaire d'inscription -->
+        <button id="show-register-form" style="font-size: smaller;">Inscription</button>
+        <form id="register-form" style="display: none;">
+            <input type="text" id="register-nom" placeholder="Nom" required> <!-- Champ pour le nom -->
+            <input type="text" id="register-prenom" placeholder="Prénom" required> <!-- Champ pour le prénom -->
+            <input type="text" id="register-username" placeholder="Nom d'utilisateur" required> <!-- Champ pour le nom d'utilisateur -->
+            <input type="password" id="register-password" placeholder="Mot de passe" required> <!-- Champ pour le mot de passe -->
+            <input type="text" id="register-question-secrete" placeholder="Question secrète" required> <!-- Champ pour la question secrète -->
+            <input type="text" id="register-reponse-secrete" placeholder="Réponse à la question secrète" required> <!-- Champ pour la réponse à la question secrète -->
+            <label class="checkbox-label">
+                <input type="hidden" id="is-admin"> <!-- Checkbox pour définir si l'utilisateur est administrateur -->
+            </label>
+            <button type="submit">Créer</button> <!-- Bouton pour créer l'utilisateur -->
+        </form>
+        <p id="register-error-message"></p> <!-- Message d'erreur pour l'inscription -->
     </div>
     <script src="script.js"></script>
     <script>

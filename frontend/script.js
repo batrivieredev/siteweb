@@ -606,6 +606,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Mettre à jour les logs toutes les 5 secondes
-    setInterval(updateLogs, 5000);
+    // Mettre à jour les logs toutes les 1 secondes
+    setInterval(updateLogs, 1000);
 });

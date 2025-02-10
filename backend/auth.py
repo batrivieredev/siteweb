@@ -5,6 +5,7 @@ import sqlite3
 import bcrypt
 import random
 import string
+from flasgger import swag_from
 
 # Define the database file
 DATABASE = "data.db"
@@ -20,6 +21,47 @@ def generate_temp_password(length=8):
 
 # Route for user login
 @app.route('/login', methods=['POST'])
+@swag_from({
+    'tags': ['Auth'],
+    'parameters': [
+        {
+            'name': 'body',
+            'in': 'body',
+            'required': True,
+            'schema': {
+                'type': 'object',
+                'properties': {
+                    'username': {'type': 'string'},
+                    'password': {'type': 'string'}
+                },
+                'required': ['username', 'password']
+            }
+        }
+    ],
+    'responses': {
+        200: {
+            'description': 'Connexion réussie',
+            'schema': {
+                'type': 'object',
+                'properties': {
+                    'success': {'type': 'boolean'},
+                    'message': {'type': 'string'},
+                    'is_admin': {'type': 'boolean'}
+                }
+            }
+        },
+        401: {
+            'description': 'Identifiants incorrects',
+            'schema': {
+                'type': 'object',
+                'properties': {
+                    'success': {'type': 'boolean'},
+                    'message': {'type': 'string'}
+                }
+            }
+        }
+    }
+})
 def login():
     data = request.get_json()  # Get JSON data from the request
     username = data.get('username')  # Extract username
@@ -41,6 +83,21 @@ def login():
 
 # Route for user logout
 @app.route('/logout', methods=['POST'])
+@swag_from({
+    'tags': ['Auth'],
+    'responses': {
+        200: {
+            'description': 'Déconnexion réussie',
+            'schema': {
+                'type': 'object',
+                'properties': {
+                    'success': {'type': 'boolean'},
+                    'message': {'type': 'string'}
+                }
+            }
+        }
+    }
+})
 def logout():
     session.pop('username', None)  # Remove username from session
     session.pop('is_admin', None)  # Remove admin status from session
@@ -48,6 +105,61 @@ def logout():
 
 # Route for user registration
 @app.route('/register', methods=['POST'])
+@swag_from({
+    'tags': ['Auth'],
+    'parameters': [
+        {
+            'name': 'body',
+            'in': 'body',
+            'required': True,
+            'schema': {
+                'type': 'object',
+                'properties': {
+                    'username': {'type': 'string'},
+                    'password': {'type': 'string'},
+                    'nom': {'type': 'string'},
+                    'prenom': {'type': 'string'},
+                    'question_secrete': {'type': 'string'},
+                    'reponse_secrete': {'type': 'string'},
+                    'is_admin': {'type': 'boolean'}
+                },
+                'required': ['username', 'password', 'nom', 'prenom', 'question_secrete', 'reponse_secrete']
+            }
+        }
+    ],
+    'responses': {
+        200: {
+            'description': 'Utilisateur créé avec succès',
+            'schema': {
+                'type': 'object',
+                'properties': {
+                    'success': {'type': 'boolean'},
+                    'message': {'type': 'string'}
+                }
+            }
+        },
+        400: {
+            'description': 'La réponse à la question secrète est requise.',
+            'schema': {
+                'type': 'object',
+                'properties': {
+                    'success': {'type': 'boolean'},
+                    'message': {'type': 'string'}
+                }
+            }
+        },
+        409: {
+            'description': 'Nom d\'utilisateur déjà pris',
+            'schema': {
+                'type': 'object',
+                'properties': {
+                    'success': {'type': 'boolean'},
+                    'message': {'type': 'string'}
+                }
+            }
+        }
+    }
+})
 def register():
     data = request.get_json()  # Get JSON data from the request
     username = data.get('username')  # Extract username
@@ -75,12 +187,51 @@ def register():
         conn.commit()  # Commit the transaction
         return jsonify({'success': True, 'message': 'Utilisateur créé avec succès'})  # Return success response
     except sqlite3.IntegrityError:
-        return jsonify({'success': False, 'message': 'Nom d\'utilisateur déjà pris'})  # Return failure response if username is taken
+        return jsonify({'success': False, 'message': 'Nom d\'utilisateur déjà pris'}), 409  # Return failure response if username is taken
     finally:
         conn.close()  # Close the database connection
 
 # Route to get the secret question for a user
 @app.route('/get_secret_question', methods=['POST'])
+@swag_from({
+    'tags': ['Auth'],
+    'parameters': [
+        {
+            'name': 'body',
+            'in': 'body',
+            'required': True,
+            'schema': {
+                'type': 'object',
+                'properties': {
+                    'username': {'type': 'string'}
+                },
+                'required': ['username']
+            }
+        }
+    ],
+    'responses': {
+        200: {
+            'description': 'Question secrète récupérée avec succès',
+            'schema': {
+                'type': 'object',
+                'properties': {
+                    'success': {'type': 'boolean'},
+                    'question_secrete': {'type': 'string'}
+                }
+            }
+        },
+        404: {
+            'description': 'Nom d\'utilisateur non trouvé',
+            'schema': {
+                'type': 'object',
+                'properties': {
+                    'success': {'type': 'boolean'},
+                    'message': {'type': 'string'}
+                }
+            }
+        }
+    }
+})
 def get_secret_question():
     data = request.get_json()  # Get JSON data from the request
     username = data.get('username')  # Extract username
@@ -95,10 +246,61 @@ def get_secret_question():
     if user:
         return jsonify({'success': True, 'question_secrete': user[0]})  # Return success response with secret question
     else:
-        return jsonify({'success': False, 'message': 'Nom d\'utilisateur non trouvé'})  # Return failure response if user not found
+        return jsonify({'success': False, 'message': 'Nom d\'utilisateur non trouvé'}), 404  # Return failure response if user not found
 
 # Route to reset the password
 @app.route('/reset_password', methods=['POST'])
+@swag_from({
+    'tags': ['Auth'],
+    'parameters': [
+        {
+            'name': 'body',
+            'in': 'body',
+            'required': True,
+            'schema': {
+                'type': 'object',
+                'properties': {
+                    'username': {'type': 'string'},
+                    'reponse_secrete': {'type': 'string'}
+                },
+                'required': ['username', 'reponse_secrete']
+            }
+        }
+    ],
+    'responses': {
+        200: {
+            'description': 'Mot de passe temporaire généré',
+            'schema': {
+                'type': 'object',
+                'properties': {
+                    'success': {'type': 'boolean'},
+                    'message': {'type': 'string'},
+                    'temp_password': {'type': 'string'}
+                }
+            }
+        },
+        400: {
+            'description': 'La réponse à la question secrète est requise.',
+            'schema': {
+                'type': 'object',
+                'properties': {
+                    'success': {'type': 'boolean'},
+                    'message': {'type': 'string'}
+                }
+            }
+        },
+        404: {
+            'description': 'Nom d\'utilisateur ou réponse secrète incorrecte',
+            'schema': {
+                'type': 'object',
+                'properties': {
+                    'success': {'type': 'boolean'},
+                    'message': {'type': 'string'}
+                }
+            }
+        }
+    }
+})
 def reset_password():
     data = request.get_json()  # Get JSON data from the request
     username = data.get('username')  # Extract username
@@ -125,4 +327,4 @@ def reset_password():
         return jsonify({'success': True, 'message': 'Mot de passe temporaire généré', 'temp_password': temp_password})  # Return success response with temporary password
     else:
         conn.close()  # Close the database connection
-        return jsonify({'success': False, 'message': 'Nom d\'utilisateur ou réponse secrète incorrecte'})  # Return failure response if user not found or secret answer incorrect
+        return jsonify({'success': False, 'message': 'Nom d\'utilisateur ou réponse secrète incorrecte'}), 404  # Return failure response if user not found or secret answer incorrect

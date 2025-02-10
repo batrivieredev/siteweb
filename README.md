@@ -86,7 +86,16 @@ python3 backend/run.py
 ```
 
 #### 3.2.6 Ouvrir l'interface web
-Ouvrez `index.html` dans un navigateur.
+- Ouvrez `index.html` dans un navigateur.
+
+---
+
+#### 3.2.7 Obtenir les versions des dépendances installées
+- Pour pouvoir utiliser le projet avec les memes versions de dépendances, il faut uliliser la commande `pip install -r requirements.txt`
+- Pour obtenir les versions de toutes les bibliothèques installées dans votre environnement Python, utilisez la commande suivante :
+`pip freeze`
+- Et pour les ajouter directement dans un fichier requirements.txt, déja créer au préalable `pip freeze > requirements.txt`
+
 
 ---
 
