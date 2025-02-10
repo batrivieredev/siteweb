@@ -119,6 +119,7 @@ python3 backend/run.py
 ├── images/
 │   ├── background1.jpeg    # Image de fond page accueil index.html
 │   └── background.jpg      # Image de fond
+├── requirements.txt        # Fichier de requirements
 └── data.db                 # Base de données SQLite
 ```
 
@@ -173,4 +174,4 @@ python3 backend/run.py
 ---
 
 ## Commits
-- **41c467d1bef856d16ec3b5f2fa9eb6e006913e2c** : Site fonctionne correctement sans erreurs
+- **4e3c610132276cb315c22de96e8777ed7d858a4e** : Site fonctionne correctement sans erreurs
