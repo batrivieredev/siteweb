@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tableau de Bord Administrateur</title>
     <link rel="stylesheet" href="style.css"> <!-- Lien vers le fichier CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/xterm/css/xterm.css" />
+    <script src="https://unpkg.com/xterm/lib/xterm.js"></script>
 </head>
 <body class="welcome-page"> <!-- Classe pour styliser la page -->
 
@@ -25,6 +27,7 @@
                 <button id="hide-users-button" class="nav-button" style="display: none;">Fermer</button> <!-- Bouton pour fermer la gestion des utilisateurs -->
                 <button id="open-chat-button" class="nav-button">Messagerie</button> <!-- Bouton pour ouvrir la messagerie -->
                 <button id="view-logs-button" class="nav-button nav-button-logs">Voir les logs</button> <!-- Bouton pour voir les logs -->
+                <button id="open-terminal" class="nav-button">Ouvrir le Terminal</button>
                 <button id="swagger-button" class="nav-button" onclick="window.open('http://127.0.0.1:5000/apidocs/', '_blank')">Accéder à Swagger</button> <!-- Bouton pour accéder à Swagger -->
                 <button id="logout-button" class="nav-button" style="margin-left: auto;">Se déconnecter</button> <!-- Bouton pour se déconnecter -->
             </div>
@@ -116,6 +119,16 @@
             </form>
         </div>
     </div>
+
+    <!-- Modal du terminal -->
+    <div id="terminal-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="close-terminal">&times;</span>
+            <h3>Terminal Administrateur</h3>
+            <div id="terminal"></div>
+        </div>
+    </div>
+
 
     <!-- Modal Modifier un post -->
     <div id="edit-post-modal" class="modal">
@@ -348,6 +361,38 @@
             fetchUserCount();
             fetchPosts();
         });
-    </script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+
+        // Initialisation du terminal
+        const terminalContainer = document.getElementById('terminal');
+        const terminal = new Terminal();
+        terminal.open(terminalContainer);
+        terminal.write('Bienvenue sur le terminal admin\r\n');
+
+        terminal.onData(e => {
+            handleTerminalInput(e);
+        });
+
+        function handleTerminalInput(data) {
+            // Logique pour gérer les entrées du terminal
+            terminal.write(data);
+        }
+
+        document.getElementById('open-terminal').addEventListener('click', function() {
+            document.getElementById('terminal-modal').style.display = 'block';
+            if (!window.terminalInitialized) {
+                terminal.focus();
+                window.terminalInitialized = true;
+            }
+        });
+
+        document.getElementById('close-terminal').addEventListener('click', function() {
+            document.getElementById('terminal-modal').style.display = 'none';
+        });
+
+});
+</script>
+
 </body>
 </html>

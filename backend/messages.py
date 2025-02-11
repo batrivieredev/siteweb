@@ -15,7 +15,17 @@ def get_messages():
     messages = cursor.fetchall()
     conn.close()
 
-    return jsonify({'success': True, 'messages': [{'id': msg[0], 'sender': msg[1], 'receiver': msg[2], 'message': msg[3], 'timestamp': msg[4]} for msg in messages]})
+    message_list = []
+    for msg in messages:
+        message_list.append({
+            'id': msg[0],
+            'sender': msg[1],
+            'receiver': msg[2],
+            'message': msg[3],
+            'timestamp': msg[4]
+        })
+
+    return jsonify({'success': True, 'messages': message_list})
 
 @app.route('/delete_message', methods=['POST'])
 def delete_message():
